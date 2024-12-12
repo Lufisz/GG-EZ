@@ -1,0 +1,39 @@
+.App {
+    font-family: "Orbitron", sans-serif;
+    background-color: #101010;
+    min-height: 100vh;
+    color: #e0e0e0;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  a {
+    color: #ff6600;
+    transition: color ease-in-out 0.3s;
+  }
+  
+  a:hover {
+    text-decoration: none;
+    color: #00ff99;
+  }
+  
+  a:hover i {
+    color: #00ffcc;
+    transition: color ease-in-out 0.3s;
+  }
+  
+  i {
+    color: #cfced3;
+    font-size: 1.6rem;
+    padding: 7px;
+    vertical-align: middle;
+  }
+  
+  i:hover {
+    cursor: pointer;
+    transition: color ease-in-out 0.3s;
+    color: #ff6600;
+  }
+  

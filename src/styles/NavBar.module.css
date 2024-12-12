@@ -6,7 +6,7 @@
 
 .NavLink {
     color: #e0e0e0 !important;
-    font-size: 0.9rem !important;
+    font-size: 0.9rem;
     margin-left: 20px;
     text-transform: uppercase;
     transition: color 0.3s ease-in-out, border-bottom 0.3s ease-in-out;
@@ -15,11 +15,11 @@
 
 .NavLink:hover {
     color: #ff6600 !important;
-    border-bottom: 2px solid #ff6600;
+    border-bottom: 1px solid #ff6600;
 }
 
 .Logo {
-    font-size: 1.8rem !important;
+    font-size: 1.8rem;
     font-weight: bold;
     color: #00ff99 !important;
     text-transform: uppercase;
@@ -30,24 +30,22 @@
     color: #00ffcc !important;
 }
 
-.navbar-toggler-icon {
-    display: none !important;
-    background: none !important;
-    border: none !important;
+.navbar-toggler {
+    background: none;
+    border: none;
+    box-shadow: none;
+    outline: none;
 }
-  
+
 .CustomToggle {
-    background: url('/src/assets/menu-icon.png') no-repeat center !important;
-    background-size: contain !important;
-    border: none !important;
+    background: url('/src/assets/menu-icon.png') no-repeat center;
+    background-size: contain;
+    border: none;
     width: 30px;
     height: 30px;
-    box-shadow: none !important;
-  }
-  
-.navbar-toggler {
-    background: none !important;
-    border: none !important;
-    box-shadow: none !important;
-    outline: none !important;
+    box-shadow: none;
+}
+
+.navbar-toggler-icon {
+    display: none;
 }
