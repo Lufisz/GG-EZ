@@ -3,10 +3,17 @@
     background-color: #101010;
     min-height: 100vh;
     color: #e0e0e0;
-  }
+    display: flex;
+    flex-direction: column;
+}
   
 * {
     box-sizing: border-box;
+}
+
+.Main {
+    flex: 1;
+    padding-top: 81px;
 }
   
 a {
