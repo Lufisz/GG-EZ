@@ -1,5 +1,6 @@
 import React from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
 import styles from "../styles/NavBar.module.css";
 
 const NavBar = () => {
@@ -8,26 +9,47 @@ const NavBar = () => {
       <Container>
         <Navbar.Brand className={styles.Logo}>GG-EZ</Navbar.Brand>
         <Navbar.Toggle
-          aria-controls="basic-navbar-nav navbar-light"
+          aria-controls="basic-navbar-nav"
           className={styles.CustomToggle}
         />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto text-left">
-            <Nav.Link href="/" className={styles.NavLink}>
+          <NavLink
+              to="/"
+              exact
+              className={styles.NavLink}
+              activeClassName={styles.Active}
+            >
               <i className="fas fa-home"></i> Home
-            </Nav.Link>
-            <Nav.Link href="/events" className={styles.NavLink}>
+            </NavLink>
+            <NavLink
+              to="/events"
+              className={styles.NavLink}
+              activeClassName={styles.Active}
+            >
               <i className="fas fa-calendar-alt"></i> Events
-            </Nav.Link>
-            <Nav.Link href="/matches" className={styles.NavLink}>
+            </NavLink>
+            <NavLink
+              to="/matches"
+              className={styles.NavLink}
+              activeClassName={styles.Active}
+            >
               <i className="fas fa-gamepad"></i> Matches
-            </Nav.Link>
-            <Nav.Link href="/signin" className={styles.NavLink}>
+            </NavLink>
+            <NavLink
+              to="/signin"
+              className={styles.NavLink}
+              activeClassName={styles.Active}
+            >
               <i className="fas fa-sign-in-alt"></i> Sign In
-            </Nav.Link>
-            <Nav.Link href="/signup" className={styles.NavLink}>
+            </NavLink>
+            <NavLink
+              to="/signup"
+              className={styles.NavLink}
+              activeClassName={styles.Active}
+            >
               <i className="fas fa-user-plus"></i> Sign Up
-            </Nav.Link>
+            </NavLink>
           </Nav>
         </Navbar.Collapse>
       </Container>

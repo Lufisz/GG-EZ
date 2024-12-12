@@ -5,6 +5,7 @@
 }
 
 .NavLink {
+    margin-right: 10px;
     color: #e0e0e0 !important;
     font-size: 0.9rem !important;
     text-transform: uppercase;
@@ -13,12 +14,20 @@
 }
 
 .NavLink i {
+    margin-right: -5px;
     font-size: 0.8rem;
+    
 }
 
 .NavLink:hover {
     color: #ff6600 !important;
     border-bottom: 1px solid #ff6600;
+    text-decoration: none
+}
+
+.NavLink.Active i {
+    color: #00ff99;
+    transition: color 0.3s ease-in-out;
 }
 
 .Logo {
@@ -51,4 +60,8 @@
 
 .navbar-toggler-icon {
     display: none;
+}
+
+.Active {
+    color: #ff6600 !important;
 }
