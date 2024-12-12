@@ -1,10 +1,11 @@
 import React from "react";
+import { Route, Switch } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Container from "react-bootstrap/Container";
 import styles from "./App.module.css";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Container from "react-bootstrap/Container";
-import { Route, Switch } from "react-router-dom";
+import SignUpForm from "./pages/auth/SignUpForm";
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
           <Route exact path="/events" render={() => <h1>Events Page</h1>} />
           <Route exact path="/matches" render={() => <h1>Matches Page</h1>} />
           <Route exact path="/signin" render={() => <h1>Sign In Page</h1>} />
-          <Route exact path="/signup" render={() => <h1>Sign Up Page</h1>} />
+          <Route exact path="/signup" component={SignUpForm} />
           <Route render={() => <p>Page not found!</p>} />
         </Switch>
       </Container>

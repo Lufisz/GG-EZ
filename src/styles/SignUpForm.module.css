@@ -1,0 +1,69 @@
+.Container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 10px;
+    padding: 30px;
+    background-color: #1a1a1a;
+    max-width: 400px;
+    margin: 50px auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+}
+
+.Input {
+    background-color: #1a1a1a;
+    border: 2px solid #333;
+    color: #e0e0e0;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    height: auto;
+    text-align: center;
+}
+
+.Input::placeholder {
+    color: #e0e0e0;
+}
+  
+.Input:focus {
+    border-color: #00ff99;
+    box-shadow: 0 0 5px #00ff99;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+}
+
+.Input option {
+    color: #e0e0e0;
+    background-color: #1a1a1a;
+}
+
+.Header {
+    font-weight: bold;
+    font-size: 24px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #00ff99;
+    margin-bottom: 20px;
+}
+
+.Link {
+    color: #ff6600;
+    text-align: center;
+    text-decoration: none;
+    margin-top: 15px;
+}
+
+.Link span {
+    color: #00ff99;
+}
+
+.Button {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 350px;
+    padding: 10px;
+}
