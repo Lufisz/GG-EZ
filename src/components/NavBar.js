@@ -12,7 +12,7 @@ const NavBar = () => {
           aria-controls="basic-navbar-nav"
           className={styles.CustomToggle}
         />
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar.Collapse id="basic-navbar-nav" style={{ backgroundColor: '#1a1a1a' }}>
           <Nav className="ml-auto text-left">
           <NavLink
               to="/"
