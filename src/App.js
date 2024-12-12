@@ -1,19 +1,13 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import NavigationBar from './components/NavBar';
+import "./App.css";
+import NavBar from "./components/NavBar";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const App = () => {
+function App() {
   return (
-    <Router>
-      <NavigationBar />
-      <Switch>
-        <Route path="/" />
-        <Route path="/events" />
-        <Route path="/matches" />
-        <Route path="/signin" />
-      </Switch>
-    </Router>
+    <div className="App">
+      <NavBar />
+    </div>
   );
-};
+}
 
 export default App;

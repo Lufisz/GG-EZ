@@ -1,28 +1,33 @@
-import React from 'react';
-import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Navbar, Container, Nav } from "react-bootstrap";
+import styles from "../styles/NavBar.module.css";
 
-const NavigationBar = () => {
-  const isLoggedIn = false;
-
+const NavBar = () => {
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <Navbar expand="md" fixed="top" className={styles.NavBar}>
       <Container>
-        <Navbar.Brand href="#home">GG-EZ</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Brand className={styles.Logo}>GG-EZ</Navbar.Brand>
+        <Navbar.Toggle
+          aria-controls="basic-navbar-nav navbar-light"
+          className={styles.CustomToggle}
+        />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ml-auto">
-            <Nav.Link as={Link} to="/">Home</Nav.Link>
-            <Nav.Link as={Link} to="/events">Events</Nav.Link>
-            <Nav.Link as={Link} to="/matches">Matches</Nav.Link>
-            {isLoggedIn ? (
-              <NavDropdown title="Account" id="basic-nav-dropdown">
-                <NavDropdown.Item as={Link} to="/profile">Profile</NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/logout">Logout</NavDropdown.Item>
-              </NavDropdown>
-            ) : (
-              <Nav.Link as={Link} to="/signin">Sign In</Nav.Link>
-            )}
+          <Nav className="ml-auto text-left">
+            <Nav.Link href="/" className={styles.NavLink}>
+              <i className="fas fa-home"></i> Home
+            </Nav.Link>
+            <Nav.Link href="/events" className={styles.NavLink}>
+              <i className="fas fa-calendar-alt"></i> Events
+            </Nav.Link>
+            <Nav.Link href="/matches" className={styles.NavLink}>
+              <i className="fas fa-gamepad"></i> Matches
+            </Nav.Link>
+            <Nav.Link href="/signin" className={styles.NavLink}>
+              <i className="fas fa-sign-in-alt"></i> Sign In
+            </Nav.Link>
+            <Nav.Link href="/signup" className={styles.NavLink}>
+              <i className="fas fa-user-plus"></i> Sign Up
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -30,4 +35,4 @@ const NavigationBar = () => {
   );
 };
 
-export default NavigationBar;
+export default NavBar;
