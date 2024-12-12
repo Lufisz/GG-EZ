@@ -11,7 +11,7 @@ const SignUpForm = () => {
     email: "",
     password1: "",
     password2: "",
-    role: "default", // default role
+    role: "default_user",
   });
   const { username, email, password1, password2, role } = signUpData;
 

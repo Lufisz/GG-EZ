@@ -32,8 +32,6 @@
     transition: color 0.3s ease-in-out;
 }
 
-/* Removed unused navbar-collapse styles */
-
 .Logo {
     font-size: 1.8rem !important;
     font-weight: bold;
