@@ -5,35 +5,35 @@
     color: #e0e0e0;
   }
   
-  * {
+* {
     box-sizing: border-box;
-  }
+}
   
-  a {
+a {
     color: #ff6600;
     transition: color ease-in-out 0.3s;
-  }
+}
   
-  a:hover {
+a:hover {
     text-decoration: none;
     color: #00ff99;
-  }
+}
   
-  a:hover i {
+a:hover i {
     color: #00ffcc;
     transition: color ease-in-out 0.3s;
-  }
+}
   
-  i {
+i {
     color: #cfced3;
     font-size: 1.6rem;
     padding: 7px;
     vertical-align: middle;
-  }
+}
   
-  i:hover {
+i:hover {
     cursor: pointer;
     transition: color ease-in-out 0.3s;
     color: #ff6600;
-  }
+}
   

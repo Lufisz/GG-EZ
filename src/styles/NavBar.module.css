@@ -6,11 +6,14 @@
 
 .NavLink {
     color: #e0e0e0 !important;
-    font-size: 0.9rem;
-    margin-left: 20px;
+    font-size: 0.9rem !important;
     text-transform: uppercase;
     transition: color 0.3s ease-in-out, border-bottom 0.3s ease-in-out;
     z-index: 11;
+}
+
+.NavLink i {
+    font-size: 0.8rem;
 }
 
 .NavLink:hover {
@@ -19,7 +22,7 @@
 }
 
 .Logo {
-    font-size: 1.8rem;
+    font-size: 1.8rem !important;
     font-weight: bold;
     color: #00ff99 !important;
     text-transform: uppercase;
