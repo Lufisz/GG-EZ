@@ -28,6 +28,11 @@
 .Input::placeholder {
     color: #e0e0e0;
 }
+
+.Input:hover {
+    border-color: #00ff99;
+    box-shadow: 0 0 5px #00ff99;
+}
   
 .Input:focus {
     border-color: #00ff99;
