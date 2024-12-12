@@ -8,11 +8,12 @@ import axios from "axios";
 const SignUpForm = () => {
   const [signUpData, setSignUpData] = useState({
     username: "",
+    email: "",
     password1: "",
     password2: "",
     role: "default", // default role
   });
-  const { username, password1, password2, role } = signUpData;
+  const { username, email, password1, password2, role } = signUpData;
 
   const [errors, setErrors] = useState({});
   const history = useHistory();
@@ -50,6 +51,23 @@ const SignUpForm = () => {
           />
         </Form.Group>
         {errors.username?.map((message, idx) => (
+          <Alert key={idx} variant="warning">
+            {message}
+          </Alert>
+        ))}
+
+        <Form.Group controlId="email">
+          <Form.Label className="d-none">Email</Form.Label>
+          <Form.Control
+            className={styles.Input}
+            type="email"
+            placeholder="Email"
+            name="email"
+            value={email}
+            onChange={handleChange}
+          />
+        </Form.Group>
+        {errors.email?.map((message, idx) => (
           <Alert key={idx} variant="warning">
             {message}
           </Alert>
@@ -98,8 +116,8 @@ const SignUpForm = () => {
             value={role}
             onChange={handleChange}
           >
-            <option value="default">Default User</option>
-            <option value="staff">Staff Member</option>
+            <option value="default_user">Default User</option>
+            <option value="staff_user">Staff Member</option>
           </Form.Control>
         </Form.Group>
         {errors.role?.map((message, idx) => (
