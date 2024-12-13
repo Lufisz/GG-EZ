@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import styles from "../../styles/SignUpForm.module.css";
+import styles from "../../styles/SignInUpForm.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import { Form, Button, Alert } from "react-bootstrap";
 import axios from "axios";
@@ -48,6 +48,7 @@ const SignUpForm = () => {
             name="username"
             value={username}
             onChange={handleChange}
+            required
           />
         </Form.Group>
         {errors.username?.map((message, idx) => (
@@ -65,6 +66,7 @@ const SignUpForm = () => {
             name="email"
             value={email}
             onChange={handleChange}
+            required
           />
         </Form.Group>
         {errors.email?.map((message, idx) => (
@@ -82,6 +84,7 @@ const SignUpForm = () => {
             name="password1"
             value={password1}
             onChange={handleChange}
+            required
           />
         </Form.Group>
         {errors.password1?.map((message, idx) => (
@@ -99,6 +102,7 @@ const SignUpForm = () => {
             name="password2"
             value={password2}
             onChange={handleChange}
+            required
           />
         </Form.Group>
         {errors.password2?.map((message, idx) => (

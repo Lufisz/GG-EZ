@@ -6,6 +6,7 @@ import styles from "./App.module.css";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import SignUpForm from "./pages/auth/SignUpForm";
+import SignInForm from "./pages/auth/SignInForm";
 import "./api/axiosDefaults"
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
           <Route exact path="/" render={() => <h1>Home Page</h1>} />
           <Route exact path="/events" render={() => <h1>Events Page</h1>} />
           <Route exact path="/matches" render={() => <h1>Matches Page</h1>} />
-          <Route exact path="/signin" render={() => <h1>Sign In Page</h1>} />
+          <Route exact path="/signin" component={SignInForm} />
           <Route exact path="/signup" component={SignUpForm} />
           <Route render={() => <p>Page not found!</p>} />
         </Switch>
