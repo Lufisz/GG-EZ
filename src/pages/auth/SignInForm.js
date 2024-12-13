@@ -4,8 +4,12 @@ import { Form, Button, Alert } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import styles from "../../styles/SignInUpForm.module.css";
 import btnStyles from "../../styles/Button.module.css";
+import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
+import CustomToast from "../../components/CustomToast"; // Import CustomToast
 
 const SignInForm = () => {
+  const { setCurrentUser } = useSetCurrentUser();
+
   const [signInData, setSignInData] = useState({
     username: "",
     password: "",
@@ -13,6 +17,8 @@ const SignInForm = () => {
   const { username, password } = signInData;
 
   const [errors, setErrors] = useState({});
+  const [showToast, setShowToast] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState("");
   const history = useHistory();
 
   const handleChange = (event) => {
@@ -25,15 +31,37 @@ const SignInForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("/dj-rest-auth/login/", signInData);
-      history.push("/");
+      const { data } = await axios.post("/dj-rest-auth/login/", signInData);
+      const token = data.key;
+
+      axios.defaults.headers.common["Authorization"] = `Token ${token}`;
+
+      localStorage.setItem("authToken", token);
+
+      const { data: user } = await axios.get("/dj-rest-auth/user/");
+      setCurrentUser(user);
+
+      setLoggedInUser(user.username);
+      setShowToast(true);
+
+      setTimeout(() => {
+        history.push("/");
+      }, 3000);
     } catch (err) {
+      console.error("Login failed:", err);
       setErrors(err.response?.data || {});
     }
   };
 
   return (
     <div className={styles.Container}>
+      <CustomToast
+        show={showToast}
+        onClose={() => setShowToast(false)}
+        message="You successfully logged in as"
+        username={loggedInUser}
+      />
+
       <h1 className={styles.Header}>Sign In</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="username">
