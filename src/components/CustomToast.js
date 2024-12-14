@@ -7,7 +7,7 @@ const CustomToast = ({ show, onClose, message, username }) => {
     <Toast
       onClose={onClose}
       show={show}
-      delay={3000}
+      delay={1000}
       autohide
       className={toastStyles.toast}
     >

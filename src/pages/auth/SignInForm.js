@@ -37,15 +37,15 @@ const SignInForm = () => {
       axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
       localStorage.setItem("accessToken", accessToken);
   
-      const { data: user } = await axios.get("/dj-rest-auth/user/");
-      setCurrentUser(user);
+      localStorage.setItem("currentUser", JSON.stringify(data.user));
+      setCurrentUser(data.user);
   
-      setLoggedInUser(user.username);
+      setLoggedInUser(data.user.username);
       setShowToast(true);
   
       setTimeout(() => {
         history.push("/");
-      }, 3000);
+      }, 1000);
     } catch (err) {
       console.error("Login failed:", err);
       setErrors(err.response?.data || {});
