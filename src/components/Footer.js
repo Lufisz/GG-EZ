@@ -9,13 +9,16 @@ const Footer = () => {
           &copy; {new Date().getFullYear()} GG-EZ. All rights reserved.
         </p>
         <div className={styles.Links}>
-          <a href="/privacy" className={styles.FooterLink}>
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+          <a href="#" className={styles.FooterLink}>
             Privacy Policy
           </a>
-          <a href="/terms" className={styles.FooterLink}>
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+          <a href="#" className={styles.FooterLink}>
             Terms of Service
           </a>
-          <a href="/contact" className={styles.FooterLink}>
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+          <a href="#" className={styles.FooterLink}>
             Contact Us
           </a>
         </div>

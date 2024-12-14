@@ -18,7 +18,7 @@ export const CurrentUserProvider = ({ children }) => {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
       setCurrentUser(null);
-      history.push("/signin");
+      history.push("/");
     } catch (err) {
       console.error("Error logging out:", err);
     }

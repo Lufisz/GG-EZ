@@ -7,6 +7,7 @@ import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import SignUpForm from "./pages/auth/SignUpForm";
 import SignInForm from "./pages/auth/SignInForm";
+import HomePage from "./pages/HomePage";
 import { CurrentUserProvider, useSetCurrentUser } from "./contexts/CurrentUserContext";
 import "./api/axiosDefaults";
 import axios from "axios";
@@ -41,7 +42,7 @@ function App() {
         <NavBar />
         <Container className={styles.Main}>
           <Switch>
-            <Route exact path="/" render={() => <h1>Home Page</h1>} />
+            <Route exact path="/" component={HomePage} />
             <Route exact path="/events" render={() => <h1>Events Page</h1>} />
             <Route exact path="/matches" render={() => <h1>Matches Page</h1>} />
             <Route exact path="/signin" component={SignInForm} />
