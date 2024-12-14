@@ -18,17 +18,29 @@ export const CurrentUserProvider = ({ children }) => {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
       setCurrentUser(null);
-      history.push("/");
+      history.push("/signin");
     } catch (err) {
       console.error("Error logging out:", err);
     }
   }, [history]);
+
+  const fetchCurrentUserRole = useCallback(async () => {
+    try {
+      const { data } = await axios.get("users/current-user-role/");
+      setCurrentUser(data);
+      localStorage.setItem("currentUser", JSON.stringify(data));
+    } catch (err) {
+      console.error("Error fetching user role:", err);
+      handleLogout();
+    }
+  }, [handleLogout]);
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
         const { data } = await axios.get("/dj-rest-auth/user/");
         setCurrentUser(data);
+        fetchCurrentUserRole();
       } catch (err) {
         console.log("Error fetching current user:", err);
         handleLogout();
@@ -36,7 +48,7 @@ export const CurrentUserProvider = ({ children }) => {
     };
 
     fetchCurrentUser();
-  }, [handleLogout]);
+  }, [handleLogout, fetchCurrentUserRole]);
 
   useEffect(() => {
     const responseInterceptor = axios.interceptors.response.use(

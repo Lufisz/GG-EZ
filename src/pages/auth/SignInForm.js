@@ -32,17 +32,18 @@ const SignInForm = () => {
     event.preventDefault();
     try {
       const { data } = await axios.post("/dj-rest-auth/login/", signInData);
-  
+
       const accessToken = data.access_token;
       axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
       localStorage.setItem("accessToken", accessToken);
-  
-      localStorage.setItem("currentUser", JSON.stringify(data.user));
-      setCurrentUser(data.user);
-  
-      setLoggedInUser(data.user.username);
+
+      const roleResponse = await axios.get("users/current-user-role/");
+      setCurrentUser(roleResponse.data);
+      localStorage.setItem("currentUser", JSON.stringify(roleResponse.data));
+
+      setLoggedInUser(roleResponse.data.username);
       setShowToast(true);
-  
+
       setTimeout(() => {
         history.push("/");
       }, 1000);
@@ -51,7 +52,6 @@ const SignInForm = () => {
       setErrors(err.response?.data || {});
     }
   };
-  
 
   return (
     <div className={styles.Container}>

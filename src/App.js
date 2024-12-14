@@ -8,6 +8,11 @@ import Footer from "./components/Footer";
 import SignUpForm from "./pages/auth/SignUpForm";
 import SignInForm from "./pages/auth/SignInForm";
 import HomePage from "./pages/HomePage";
+import AdminPanel from "./components/AdminPanel";
+import TeamsAdmin from "./components/admin/MatchesAdmin";
+import EventsAdmin from "./components/admin/EventsAdmin";
+import MatchesAdmin from "./components/admin/MatchesAdmin";
+import PlayersAdmin from "./components/admin/PlayersAdmin";
 import { CurrentUserProvider, useSetCurrentUser } from "./contexts/CurrentUserContext";
 import "./api/axiosDefaults";
 import axios from "axios";
@@ -47,6 +52,11 @@ function App() {
             <Route exact path="/matches" render={() => <h1>Matches Page</h1>} />
             <Route exact path="/signin" component={SignInForm} />
             <Route exact path="/signup" component={SignUpForm} />
+            <Route exact path="/admin" component={AdminPanel} />
+            <Route exact path="/admin/teams" component={TeamsAdmin} />
+            <Route exact path="/admin/events" component={EventsAdmin} />
+            <Route exact path="/admin/matches" component={MatchesAdmin} />
+            <Route exact path="/admin/players" component={PlayersAdmin} />
             <Route render={() => <p>Page not found!</p>} />
           </Switch>
         </Container>

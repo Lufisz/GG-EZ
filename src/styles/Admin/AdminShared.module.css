@@ -1,0 +1,146 @@
+.Container {
+    background-color: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 20px auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+    color: #e0e0e0;
+}
+
+.Header {
+    font-size: 2.2rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.Button {
+    margin: 8px;
+    padding: 8px 15px;
+    background-color: #333;
+    color: white;
+    border: 2px solid #333;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+}
+
+.Button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 5px #00ff99;
+}
+
+.DeleteButton {
+    background-color: #333;
+    color: white;
+    border: 2px solid #333;
+}
+
+.DeleteButton:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 8px #ff4444;
+}
+
+.Table {
+    width: 95%;
+    border-collapse: collapse;
+    margin: 20px auto;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.Table th,
+.Table td {
+    border: 1px solid #333;
+    padding: 8px;
+    text-align: center;
+}
+
+.Table th {
+    background-color: #00ff99;
+    color: #000;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+}
+
+.Table td img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.Pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.Pagination .Button {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+}
+
+.Form {
+    background-color: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+    max-width: 500px;
+    margin: 20px auto;
+    color: #e0e0e0;
+}
+
+.FormHeader {
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.FormGroup {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.Label {
+    font-size: 1rem;
+    margin-bottom: 5px;
+    color: #e0e0e0;
+}
+
+.Input {
+    padding: 8px 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #333;
+    background-color: #2a2a2a;
+    color: #fff;
+    transition: border 0.2s;
+}
+
+.Input:focus {
+    border-color: #00ff99;
+    outline: none;
+}
+
+.ButtonGroup {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.Avatar {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}

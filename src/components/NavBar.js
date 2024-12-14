@@ -6,7 +6,7 @@ import { useCurrentUser, useSetCurrentUser } from "../contexts/CurrentUserContex
 import useClickOutsideToggle from "../hooks/useClickOutsideToggle";
 
 const NavBar = () => {
-  const currentUser = useCurrentUser();
+  const currentUser = useCurrentUser(); // Access the current user
   const { handleLogout } = useSetCurrentUser();
 
   const { expanded, setExpanded, ref } = useClickOutsideToggle();
@@ -72,6 +72,15 @@ const NavBar = () => {
             >
               <i className="fas fa-gamepad"></i> Matches
             </NavLink>
+            {currentUser?.role === "staff_user" && (
+              <NavLink
+                to="/admin"
+                className={styles.NavLink}
+                activeClassName={styles.Active}
+              >
+                <i className="fas fa-tools"></i> Admin Panel
+              </NavLink>
+            )}
             {currentUser ? loggedInIcons : loggedOutIcons}
           </Nav>
         </Navbar.Collapse>
