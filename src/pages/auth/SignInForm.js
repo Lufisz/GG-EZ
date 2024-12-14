@@ -5,7 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import styles from "../../styles/SignInUpForm.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
-import CustomToast from "../../components/CustomToast"; // Import CustomToast
+import CustomToast from "../../components/CustomToast";
 
 const SignInForm = () => {
   const { setCurrentUser } = useSetCurrentUser();
@@ -32,18 +32,17 @@ const SignInForm = () => {
     event.preventDefault();
     try {
       const { data } = await axios.post("/dj-rest-auth/login/", signInData);
-      const token = data.key;
-
-      axios.defaults.headers.common["Authorization"] = `Token ${token}`;
-
-      localStorage.setItem("authToken", token);
-
+  
+      const accessToken = data.access_token;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+      localStorage.setItem("accessToken", accessToken);
+  
       const { data: user } = await axios.get("/dj-rest-auth/user/");
       setCurrentUser(user);
-
+  
       setLoggedInUser(user.username);
       setShowToast(true);
-
+  
       setTimeout(() => {
         history.push("/");
       }, 3000);
@@ -52,6 +51,7 @@ const SignInForm = () => {
       setErrors(err.response?.data || {});
     }
   };
+  
 
   return (
     <div className={styles.Container}>
