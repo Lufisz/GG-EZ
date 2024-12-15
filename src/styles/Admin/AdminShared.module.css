@@ -1,11 +1,21 @@
+/* General Reset and Layout */
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Main Container Styling */
 .Container {
     background-color: #1a1a1a;
     padding: 20px;
     border-radius: 10px;
     max-width: 800px;
+    width: 100%;
     margin: 20px auto;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
     color: #e0e0e0;
+    box-sizing: border-box;
 }
 
 .Header {
@@ -14,17 +24,20 @@
     margin-bottom: 20px;
 }
 
+/* Buttons */
 .Button {
-    margin: 8px;
-    padding: 8px 15px;
+    margin: 4px;
+    padding: 4px 8px;
     background-color: #333;
     color: white;
     border: 2px solid #333;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .Button:hover {
@@ -35,6 +48,8 @@
 
 .DeleteButton {
     background-color: #333;
+    padding: 4px 8px;
+    font-size: 0.8rem;
     color: white;
     border: 2px solid #333;
 }
@@ -44,19 +59,57 @@
     box-shadow: 0 0 8px #ff4444;
 }
 
+.BackButton {
+    float: right;
+    padding: 4px 8px;
+    background-color: #333;
+    color: white;
+    border: 2px solid #333;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.BackButton:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 5px #00ff99;
+}
+
+/* Table Styling */
+.TableWrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin: 0 auto;
+}
+
 .Table {
-    width: 95%;
+    width: 100%;
     border-collapse: collapse;
-    margin: 20px auto;
+    margin: 20px 0;
     color: #fff;
     font-size: 0.9rem;
+    table-layout: auto;
 }
 
 .Table th,
 .Table td {
     border: 1px solid #333;
-    padding: 8px;
+    padding: 4px 6px;
     text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1;
+}
+
+.Table td {
+    height: auto;
+    vertical-align: middle;
 }
 
 .Table th {
@@ -64,17 +117,29 @@
     color: #000;
     font-weight: bold;
     text-transform: uppercase;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
 }
 
 .Table td img {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     object-fit: cover;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
 }
 
+.Table td .Button {
+    display: inline-block;
+    width: auto;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    margin: 0 2px;
+    box-sizing: border-box;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* Pagination Buttons */
 .Pagination {
     display: flex;
     justify-content: center;
@@ -87,12 +152,13 @@
     font-size: 0.9rem;
 }
 
+/* Form Styling */
 .Form {
     background-color: #1a1a1a;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
-    max-width: 500px;
+    max-width: 300px;
     margin: 20px auto;
     color: #e0e0e0;
 }
@@ -131,16 +197,70 @@
     outline: none;
 }
 
+/* Button Group */
 .ButtonGroup {
     display: flex;
-    justify-content: space-between;
-    gap: 10px;
+    justify-content: left;
 }
 
+/* Avatar Images */
 .Avatar {
     width: 50px;
     height: 50px;
     object-fit: cover;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Search Bar */
+.SearchBar {
+    width: 100%;
+    max-width: 250px;
+    margin: 0 5px;
+    padding: 4px 8px;
+    font-size: 0.9rem;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+    color: #fff;
+    transition: border 0.2s;
+}
+
+.SearchBar:focus {
+    border-color: #00ff99;
+    outline: none;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    .Container {
+        padding: 10px;
+    }
+
+    .Table th:nth-child(3),
+    .Table th:nth-child(4),
+    .Table td:nth-child(3),
+    .Table td:nth-child(4) {
+        display: none;
+    }
+
+    .Table td img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .Header {
+        font-size: 1.5rem;
+    }
+
+    .Button {
+        font-size: 0.7rem;
+        padding: 3px 6px;
+    }
+
+    .Table td .Button {
+        font-size: 0.7rem;
+        padding: 2px 5px;
+        margin: 0 1px;
+    }
 }

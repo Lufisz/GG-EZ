@@ -3,103 +3,143 @@ import axios from "axios";
 import styles from "../../styles/Admin/AdminShared.module.css";
 
 const PlayersAdmin = () => {
+  // State to manage players data
   const [players, setPlayers] = useState([]);
+  const [filteredPlayers, setFilteredPlayers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [currentPlayer, setCurrentPlayer] = useState(null);
   const [nextPage, setNextPage] = useState(null);
   const [previousPage, setPreviousPage] = useState(null);
 
+  // Fetch players when the component loads
   useEffect(() => {
     fetchPlayers();
   }, []);
 
+  // Filter players based on search input
+  useEffect(() => {
+    if (searchTerm.trim()) {
+      const lowerCaseSearchTerm = searchTerm.toLowerCase();
+      setFilteredPlayers(
+        players.filter(
+          (player) =>
+            player.name.toLowerCase().includes(lowerCaseSearchTerm) ||
+            player.team_name.toLowerCase().includes(lowerCaseSearchTerm) ||
+            String(player.id).includes(searchTerm)
+        )
+      );
+    } else {
+      setFilteredPlayers(players); // Show all players if search is empty
+    }
+  }, [searchTerm, players]);
+
+  // Fetch players data from the API
   const fetchPlayers = async (url = "players/") => {
     try {
       const { data } = await axios.get(url);
       if (Array.isArray(data.results)) {
         setPlayers(data.results);
+        setFilteredPlayers(data.results);
         setNextPage(data.next);
         setPreviousPage(data.previous);
       } else {
         console.error("Unexpected response format:", data);
         setPlayers([]);
+        setFilteredPlayers([]);
       }
     } catch (err) {
       console.error("Error fetching players:", err.response || err.message);
       setPlayers([]);
+      setFilteredPlayers([]);
     } finally {
-      setLoading(false);
+      setLoading(false); // Stop loading indicator
     }
   };
 
+  // Open the form to add a new player
   const handleAddPlayer = () => {
     setCurrentPlayer(null);
     setIsEditing(true);
   };
 
+  // Open the form to edit an existing player
   const handleEditPlayer = (player) => {
     setCurrentPlayer(player);
     setIsEditing(true);
   };
 
+  // Delete a player by ID
   const handleDeletePlayer = async (playerId) => {
     if (window.confirm("Are you sure you want to delete this player?")) {
       try {
         await axios.delete(`players/${playerId}/`);
+        // Update state after deletion
         setPlayers(players.filter((player) => player.id !== playerId));
+        setFilteredPlayers(filteredPlayers.filter((player) => player.id !== playerId));
       } catch (err) {
         console.error("Error deleting player:", err.response || err.message);
       }
     }
   };
 
+  // Save player data (for adding or editing)
   const handleSave = async (player, file) => {
     try {
       let avatarUrl = player.avatar;
-  
+
+      // If a new avatar file is uploaded
       if (file) {
         const formData = new FormData();
         formData.append("file", file);
-  
+
         const response = await axios.post(
           "/cloudinary-proxy/",
           formData,
           { headers: { "Content-Type": "multipart/form-data" } }
         );
-  
+
         if (response.data.secure_url) {
-          avatarUrl = response.data.secure_url;
+          avatarUrl = response.data.secure_url; // Use the uploaded avatar URL
         } else {
           console.error("Cloudinary response missing secure_url:", response);
           throw new Error("Failed to retrieve the secure URL from Cloudinary.");
         }
       }
-  
+
+      // Prepare player data for saving
       const playerData = { ...player, avatar: avatarUrl };
-  
+
+      // Update or add a new player
       if (player.id) {
         await axios.put(`players/${player.id}/`, playerData);
       } else {
         await axios.post("players/", playerData);
       }
-  
-      fetchPlayers();
-      setIsEditing(false);
+
+      fetchPlayers(); // Refresh the player list
+      setIsEditing(false); // Close the form
     } catch (err) {
       console.error("Error saving player:", err.response || err.message);
     }
   };
-  
 
   const handleNextPage = () => {
-    if (nextPage) fetchPlayers(nextPage);
+    if (nextPage) {
+      const secureUrl = nextPage.replace(/^http:/, "https:");
+      fetchPlayers(secureUrl);
+    }
   };
 
   const handlePreviousPage = () => {
-    if (previousPage) fetchPlayers(previousPage);
+    if (previousPage) {
+      const secureUrl = previousPage.replace(/^http:/, "https:");
+      fetchPlayers(secureUrl);
+    }
   };
 
+  // Show loading indicator while data is being fetched
   if (loading) {
     return <div className={styles.Container}>Loading...</div>;
   }
@@ -112,24 +152,31 @@ const PlayersAdmin = () => {
           <button className={styles.Button} onClick={handleAddPlayer}>
             Add Player
           </button>
+          <input
+            type="text"
+            className={styles.SearchBar}
+            placeholder="Search by ID, Name, or Team"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
           <table className={styles.Table}>
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Avatar URL</th>
-                <th>Team</th>
-                <th>Actions</th>
+                <th className={styles.IdColumn}>ID</th>
+                <th className={styles.NameColumn}>Name</th>
+                <th className={styles.RoleColumn}>Role</th>
+                <th className={styles.AvatarColumn}>Avatar URL</th>
+                <th className={styles.TeamColumn}>Team</th>
+                <th className={styles.ActionsColumn}>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {players.map((player) => (
+              {filteredPlayers.map((player) => (
                 <tr key={player.id}>
-                  <td>{player.id}</td>
-                  <td>{player.name}</td>
-                  <td>{player.role}</td>
-                  <td>
+                  <td className={styles.IdColumn}>{player.id}</td>
+                  <td className={styles.NameColumn}>{player.name}</td>
+                  <td className={styles.RoleColumn}>{player.role}</td>
+                  <td className={styles.AvatarColumn}>
                     <a href={player.avatar} target="_blank" rel="noopener noreferrer">
                       <img
                         src={player.avatar}
@@ -138,8 +185,8 @@ const PlayersAdmin = () => {
                       />
                     </a>
                   </td>
-                  <td>{player.team_name}</td>
-                  <td>
+                  <td className={styles.TeamColumn}>{player.team_name}</td>
+                  <td className={styles.ActionsColumn}>
                     <button
                       className={styles.Button}
                       onClick={() => handleEditPlayer(player)}
@@ -175,6 +222,7 @@ const PlayersAdmin = () => {
           </div>
         </div>
       ) : (
+        // Show player form when editing/adding
         <PlayerForm
           player={currentPlayer}
           onSave={handleSave}
@@ -192,6 +240,7 @@ const PlayerForm = ({ player, onSave, onCancel }) => {
   const [file, setFile] = useState(null);
   const [teams, setTeams] = useState([]);
 
+  // Fetch available teams when the form loads
   useEffect(() => {
     const fetchTeams = async () => {
       try {
@@ -205,15 +254,18 @@ const PlayerForm = ({ player, onSave, onCancel }) => {
     fetchTeams();
   }, []);
 
+  // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // Handle file input for the avatar
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
 
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     onSave(formData, file);
