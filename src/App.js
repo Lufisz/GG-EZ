@@ -9,7 +9,7 @@ import SignUpForm from "./pages/auth/SignUpForm";
 import SignInForm from "./pages/auth/SignInForm";
 import HomePage from "./pages/HomePage";
 import AdminPanel from "./components/AdminPanel";
-import TeamsAdmin from "./components/admin/MatchesAdmin";
+import TeamsAdmin from "./components/admin/TeamsAdmin";
 import EventsAdmin from "./components/admin/EventsAdmin";
 import MatchesAdmin from "./components/admin/MatchesAdmin";
 import PlayersAdmin from "./components/admin/PlayersAdmin";

@@ -15,9 +15,9 @@ const AdminPanel = () => {
       <div className={styles.Options}>
         <div
           className={styles.OptionCard}
-          onClick={() => handleNavigation("/admin/teams")}
+          onClick={() => handleNavigation("/admin/matches")}
         >
-          <h2>Teams</h2>
+          <h2>Matches</h2>
         </div>
         <div
           className={styles.OptionCard}
@@ -27,9 +27,9 @@ const AdminPanel = () => {
         </div>
         <div
           className={styles.OptionCard}
-          onClick={() => handleNavigation("/admin/matches")}
+          onClick={() => handleNavigation("/admin/teams")}
         >
-          <h2>Matches</h2>
+          <h2>Teams</h2>
         </div>
         <div
           className={styles.OptionCard}
