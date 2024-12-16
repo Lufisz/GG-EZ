@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import styles from "../../src/styles/MatchPage.module.css";
+import styles from "../../src/styles/match/MatchPage.module.css";
 
 const MatchesPage = () => {
   const [matches, setMatches] = useState([]);

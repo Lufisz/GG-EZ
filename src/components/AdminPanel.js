@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import styles from "../styles/Admin/AdminPanel.module.css";
+import styles from "../styles/admin/AdminPanel.module.css";
 
 const AdminPanel = () => {
   const history = useHistory();

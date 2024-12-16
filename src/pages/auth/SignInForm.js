@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Form, Button, Alert } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
-import styles from "../../styles/SignInUpForm.module.css";
-import btnStyles from "../../styles/Button.module.css";
+import styles from "../../styles/pages/SignInUpForm.module.css";
+import btnStyles from "../../styles/components/Button.module.css";
 import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
 import CustomToast from "../../components/CustomToast";
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import styles from "../../styles/Admin/AdminShared.module.css";
+import styles from "../../styles/admin/AdminShared.module.css";
 
 const TeamsAdmin = () => {
   // State to manage teams data
@@ -87,40 +87,45 @@ const TeamsAdmin = () => {
   const handleSave = async (team, file) => {
     try {
       let logoUrl = team.logo;
-
+  
       // If a new logo file is uploaded
       if (file) {
         const formData = new FormData();
         formData.append("file", file);
-
+  
         const response = await axios.post(
           "/cloudinary-proxy/",
           formData,
           { headers: { "Content-Type": "multipart/form-data" } }
         );
-
+  
         if (response.data.secure_url) {
           logoUrl = response.data.secure_url; // Use the uploaded logo URL
         } else {
-          console.error("Cloudinary response missing secure_url:", response);
           throw new Error("Failed to retrieve the secure URL from Cloudinary.");
         }
       }
-
+  
       // Prepare team data for saving
-      const teamData = { ...team, logo: logoUrl || null };
- 
+      const teamData = {
+        name: team.name,
+        description: team.description || "",
+        logo: logoUrl || null, // Ensure null if no logo provided
+      };
+  
+      console.log("Payload being sent to backend:", teamData);
+  
       // Update or add a new team
       if (team.id) {
         await axios.put(`teams/${team.id}/`, teamData);
       } else {
         await axios.post("teams/", teamData);
       }
-
+  
       fetchTeams(); // Refresh the team list
       setIsEditing(false); // Close the form
     } catch (err) {
-      console.error("Error saving team:", err.response || err.message);
+      console.error("Error saving team:", err.response?.data || err.message);
     }
   };
 

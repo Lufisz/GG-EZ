@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import styles from "../../styles/Admin/AdminShared.module.css";
+import styles from "../../styles/admin/AdminShared.module.css";
 
 const EventsAdmin = () => {
   const [events, setEvents] = useState([]);
@@ -77,37 +77,46 @@ const EventsAdmin = () => {
   const handleSave = async (event, file) => {
     try {
       let imageUrl = event.image;
-
+  
+      // Upload the file to Cloudinary if a new file is selected
       if (file) {
         const formData = new FormData();
         formData.append("file", file);
-
+  
         const response = await axios.post(
           "/cloudinary-proxy/",
           formData,
           { headers: { "Content-Type": "multipart/form-data" } }
         );
-
+  
         if (response.data.secure_url) {
           imageUrl = response.data.secure_url;
         } else {
-          console.error("Cloudinary response missing secure_url:", response);
           throw new Error("Failed to retrieve the secure URL from Cloudinary.");
         }
       }
-
-      const eventData = { ...event, image: imageUrl || null };
-
+  
+      // Prepare the payload
+      const eventData = {
+        name: event.name,
+        description: event.description || "",
+        start_date: event.start_date,
+        end_date: event.end_date,
+        image: imageUrl || null, // Send null for no image
+      };
+  
+      console.log("Payload being sent to backend:", eventData);
+  
       if (event.id) {
-        await axios.put(`events/${event.id}`, eventData);
+        await axios.put(`events/${event.id}`, eventData); // Use PUT for updates
       } else {
-        await axios.post("events/", eventData);
+        await axios.post("events/", eventData); // Use POST for new events
       }
-
-      fetchEvents();
-      setIsEditing(false);
+  
+      fetchEvents(); // Refresh events list
+      setIsEditing(false); // Exit editing mode
     } catch (err) {
-      console.error("Error saving event:", err.response || err.message);
+      console.error("Error saving event:", err.response?.data || err.message);
     }
   };
 
@@ -234,7 +243,9 @@ const EventForm = ({ event, onSave, onCancel }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave(formData, file);
+    // Convert empty image string to null before sending
+    const formDataWithImage = { ...formData, image: formData.image || null };
+    onSave(formDataWithImage, file);
   };
 
   return (

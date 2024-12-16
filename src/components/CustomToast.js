@@ -1,6 +1,6 @@
 import React from "react";
 import { Toast } from "react-bootstrap";
-import toastStyles from "../styles/Toast.module.css";
+import toastStyles from "../styles/components/Toast.module.css";
 
 const CustomToast = ({ show, onClose, message, username }) => {
   return (

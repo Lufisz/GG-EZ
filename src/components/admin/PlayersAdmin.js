@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import styles from "../../styles/Admin/AdminShared.module.css";
+import styles from "../../styles/admin/AdminShared.module.css";
 
 const PlayersAdmin = () => {
   // State to manage players data
