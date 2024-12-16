@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import SignUpForm from "./pages/auth/SignUpForm";
 import SignInForm from "./pages/auth/SignInForm";
 import HomePage from "./pages/HomePage";
+import EventsPage from "./pages/EventsPage";
 import AdminPanel from "./components/AdminPanel";
 import TeamsAdmin from "./components/admin/TeamsAdmin";
 import EventsAdmin from "./components/admin/EventsAdmin";
@@ -48,7 +49,7 @@ function App() {
         <Container className={styles.Main}>
           <Switch>
             <Route exact path="/" component={HomePage} />
-            <Route exact path="/events" render={() => <h1>Events Page</h1>} />
+            <Route exact path="/events" component={EventsPage} />
             <Route exact path="/matches" render={() => <h1>Matches Page</h1>} />
             <Route exact path="/signin" component={SignInForm} />
             <Route exact path="/signup" component={SignUpForm} />

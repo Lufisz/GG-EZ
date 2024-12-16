@@ -271,4 +271,16 @@ body, html {
     .EventsTable td img {
         display: none;
     }
+    .MatchesTable th:nth-child(3),
+   .MatchesTable th:nth-child(4),
+   .MatchesTable th:nth-child(5),
+   .MatchesTable th:nth-child(6),
+   .MatchesTable th:nth-child(7),
+   .MatchesTable td:nth-child(3),
+   .MatchesTable td:nth-child(4),
+   .MatchesTable td:nth-child(5),
+   .MatchesTable td:nth-child(6),
+   .MatchesTable td:nth-child(7) {
+        display: none;
+  }   
 }
