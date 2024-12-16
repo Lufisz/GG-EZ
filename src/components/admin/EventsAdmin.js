@@ -1,134 +1,311 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import styles from "../../styles/Admin/AdminPanel.module.css";
+import styles from "../../styles/Admin/AdminShared.module.css";
 
 const EventsAdmin = () => {
   const [events, setEvents] = useState([]);
+  const [filteredEvents, setFilteredEvents] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [currentEvent, setCurrentEvent] = useState(null);
+  const [nextPage, setNextPage] = useState(null);
+  const [previousPage, setPreviousPage] = useState(null);
 
   useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const { data } = await axios.get("/api/events/");
-        setEvents(data);
-      } catch (err) {
-        console.error("Error fetching events:", err);
-      }
-    };
-
     fetchEvents();
   }, []);
 
+  useEffect(() => {
+    if (searchTerm.trim()) {
+      const lowerCaseSearchTerm = searchTerm.toLowerCase();
+      setFilteredEvents(
+        events.filter((event) =>
+          event.name.toLowerCase().includes(lowerCaseSearchTerm) ||
+          String(event.id).includes(searchTerm)
+        )
+      );
+    } else {
+      setFilteredEvents(events);
+    }
+  }, [searchTerm, events]);
+
+  const fetchEvents = async (url = "events/") => {
+    try {
+      const { data } = await axios.get(url);
+      if (Array.isArray(data.results)) {
+        setEvents(data.results);
+        setFilteredEvents(data.results);
+        setNextPage(data.next);
+        setPreviousPage(data.previous);
+      } else {
+        console.error("Unexpected response format:", data);
+        setEvents([]);
+        setFilteredEvents([]);
+      }
+    } catch (err) {
+      console.error("Error fetching events:", err.response || err.message);
+      setEvents([]);
+      setFilteredEvents([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleAddEvent = () => {
-    setCurrentEvent(null); // Start with a blank form
+    setCurrentEvent(null);
     setIsEditing(true);
   };
 
   const handleEditEvent = (event) => {
-    setCurrentEvent(event); // Populate the form with existing event data
+    setCurrentEvent(event);
     setIsEditing(true);
   };
 
-  const handleSave = async (event) => {
-    try {
-      if (event.id) {
-        // Update existing event
-        await axios.put(`/api/events/${event.id}/`, event);
-      } else {
-        // Add new event
-        await axios.post("/api/events/", event);
+  const handleDeleteEvent = async (eventId) => {
+    if (window.confirm("Are you sure you want to delete this event?")) {
+      try {
+        await axios.delete(`events/${eventId}`);
+        setEvents(events.filter((event) => event.id !== eventId));
+        setFilteredEvents(filteredEvents.filter((event) => event.id !== eventId));
+      } catch (err) {
+        console.error("Error deleting event:", err.response || err.message);
       }
-      setIsEditing(false);
-      const { data } = await axios.get("/api/events/");
-      setEvents(data);
-    } catch (err) {
-      console.error("Error saving event:", err);
     }
   };
 
+  const handleSave = async (event, file) => {
+    try {
+      let imageUrl = event.image;
+
+      if (file) {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const response = await axios.post(
+          "/cloudinary-proxy/",
+          formData,
+          { headers: { "Content-Type": "multipart/form-data" } }
+        );
+
+        if (response.data.secure_url) {
+          imageUrl = response.data.secure_url;
+        } else {
+          console.error("Cloudinary response missing secure_url:", response);
+          throw new Error("Failed to retrieve the secure URL from Cloudinary.");
+        }
+      }
+
+      const eventData = { ...event, image: imageUrl || null };
+
+      if (event.id) {
+        await axios.put(`events/${event.id}/`, eventData);
+      } else {
+        await axios.post("events/", eventData);
+      }
+
+      fetchEvents();
+      setIsEditing(false);
+    } catch (err) {
+      console.error("Error saving event:", err.response || err.message);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (nextPage) fetchEvents(nextPage.replace(/^http:/, "https:"));
+  };
+
+  const handlePreviousPage = () => {
+    if (previousPage) fetchEvents(previousPage.replace(/^http:/, "https:"));
+  };
+
+  if (loading) {
+    return <div className={styles.Container}>Loading...</div>;
+  }
+
   return (
-    <div className={styles.Container}>
-      <h1>Manage Events</h1>
-      {isEditing ? (
-        <EventForm event={currentEvent} onSave={handleSave} onCancel={() => setIsEditing(false)} />
+    <>
+      {!isEditing ? (
+        <div className={styles.Container}>
+          <h1 className={styles.Header}>Manage Events</h1>
+          <div className={styles.Controls}>
+            <button className={styles.Button} onClick={handleAddEvent}>
+              Add Event
+            </button>
+            <input
+              type="text"
+              className={styles.SearchBar}
+              placeholder="Search by ID or Name"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+          <div className={styles.TableWrapper}>
+            <table className={`${styles.Table} ${styles.EventsTable}`}>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Image</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredEvents.map((event) => (
+                  <tr key={event.id}>
+                    <td>{event.id}</td>
+                    <td>{event.name}</td>
+                    <td>{event.start_date}</td>
+                    <td>{event.end_date}</td>
+                    <td>
+                      {event.image && (
+                        <a href={event.image} target="_blank" rel="noopener noreferrer">
+                          <img
+                            src={event.image}
+                            alt={event.name}
+                            className={styles.Avatar}
+                          />
+                        </a>
+                      )}
+                    </td>
+                    <td>
+                      <button
+                        className={styles.Button}
+                        onClick={() => handleEditEvent(event)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className={`${styles.Button} ${styles.DeleteButton}`}
+                        onClick={() => handleDeleteEvent(event.id)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className={styles.Pagination}>
+            <button
+              className={styles.Button}
+              onClick={handlePreviousPage}
+              disabled={!previousPage}
+            >
+              Previous
+            </button>
+            <button
+              className={styles.Button}
+              onClick={handleNextPage}
+              disabled={!nextPage}
+            >
+              Next
+            </button>
+          </div>
+        </div>
       ) : (
-        <>
-          <button onClick={handleAddEvent}>Add Event</button>
-          <ul>
-            {events.map((event) => (
-              <li key={event.id}>
-                {event.name}
-                <button onClick={() => handleEditEvent(event)}>Edit</button>
-              </li>
-            ))}
-          </ul>
-        </>
+        <EventForm
+          event={currentEvent}
+          onSave={handleSave}
+          onCancel={() => setIsEditing(false)}
+        />
       )}
-    </div>
+    </>
   );
 };
 
 const EventForm = ({ event, onSave, onCancel }) => {
   const [formData, setFormData] = useState(
-    event || { name: "", description: "", start_date: "", end_date: "" }
+    event || { name: "", description: "", start_date: "", end_date: "", image: "" }
   );
+  const [file, setFile] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave(formData);
+    onSave(formData, file);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Name:
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Description:
-        <textarea
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-        />
-      </label>
-      <label>
-        Start Date:
-        <input
-          type="date"
-          name="start_date"
-          value={formData.start_date}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        End Date:
-        <input
-          type="date"
-          name="end_date"
-          value={formData.end_date}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <button type="submit">Save</button>
-      <button type="button" onClick={onCancel}>
-        Cancel
-      </button>
-    </form>
+    <div className={styles.FormContainer}>
+      <h2 className={styles.FormHeader}>{event ? "Edit Event" : "Add New Event"}</h2>
+      <form className={styles.Form} onSubmit={handleSubmit}>
+        <div className={styles.FormGroup}>
+          <label className={styles.Label}>Name:</label>
+          <input
+            type="text"
+            name="name"
+            className={styles.Input}
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className={styles.FormGroup}>
+          <label className={styles.Label}>Description:</label>
+          <textarea
+            name="description"
+            className={styles.Input}
+            value={formData.description}
+            onChange={handleChange}
+          />
+        </div>
+        <div className={styles.FormGroup}>
+          <label className={styles.Label}>Start Date:</label>
+          <input
+            type="date"
+            name="start_date"
+            className={styles.Input}
+            value={formData.start_date}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className={styles.FormGroup}>
+          <label className={styles.Label}>End Date:</label>
+          <input
+            type="date"
+            name="end_date"
+            className={styles.Input}
+            value={formData.end_date}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className={styles.FormGroup}>
+          <label className={styles.Label}>Image:</label>
+          <input type="file" accept="image/*" onChange={handleFileChange} />
+          {formData.image && (
+            <a href={formData.image} target="_blank" rel="noopener noreferrer">
+              View Current Image
+            </a>
+          )}
+        </div>
+        <div className={styles.ButtonGroup}>
+          <button className={styles.Button} type="submit">
+            Save
+          </button>
+          <button
+            className={`${styles.Button} ${styles.CancelButton}`}
+            type="button"
+            onClick={onCancel}
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 

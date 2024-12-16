@@ -263,4 +263,12 @@ body, html {
         padding: 2px 5px;
         margin: 0 1px;
     }
+    .EventsTable th:nth-child(5),
+    .EventsTable td:nth-child(5) {
+        display: none;
+    }
+    
+    .EventsTable td img {
+        display: none;
+    }
 }

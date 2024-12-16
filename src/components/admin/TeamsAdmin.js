@@ -108,8 +108,8 @@ const TeamsAdmin = () => {
       }
 
       // Prepare team data for saving
-      const teamData = { ...team, logo: logoUrl };
-
+      const teamData = { ...team, logo: logoUrl || null };
+ 
       // Update or add a new team
       if (team.id) {
         await axios.put(`teams/${team.id}/`, teamData);

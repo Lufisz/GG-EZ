@@ -109,7 +109,11 @@ const PlayersAdmin = () => {
       }
 
       // Prepare player data for saving
-      const playerData = { ...player, avatar: avatarUrl };
+      const playerData = {
+        ...player,
+        avatar: avatarUrl || null,
+        team: player.team || null,
+      };
 
       // Update or add a new player
       if (player.id) {
@@ -323,7 +327,6 @@ const PlayerForm = ({ player, onSave, onCancel }) => {
             className={styles.Input}
             value={formData.team}
             onChange={handleChange}
-            required
           >
             <option value="">Select a Team</option>
             {teams.map((team) => (
