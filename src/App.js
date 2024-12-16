@@ -15,9 +15,11 @@ import EventsAdmin from "./components/admin/EventsAdmin";
 import MatchesAdmin from "./components/admin/MatchesAdmin";
 import PlayersAdmin from "./components/admin/PlayersAdmin";
 import EventDetailPage from "./pages/EventDetailPage";
+import MatchDetailPage from "./pages/MatchDetailPage";
 import { CurrentUserProvider, useSetCurrentUser } from "./contexts/CurrentUserContext";
 import "./api/axiosDefaults";
 import axios from "axios";
+import MatchesPage from "./pages/MatchesPage";
 
 function App() {
   const history = useHistory();
@@ -52,7 +54,8 @@ function App() {
             <Route exact path="/" component={HomePage} />
             <Route exact path="/events" component={EventsPage} />
             <Route path="/events/:id" component={EventDetailPage} />
-            <Route exact path="/matches" render={() => <h1>Matches Page</h1>} />
+            <Route exact path="/matches" component={MatchesPage} />
+            <Route path="/matches/:id" component={MatchDetailPage} />
             <Route exact path="/signin" component={SignInForm} />
             <Route exact path="/signup" component={SignUpForm} />
             <Route exact path="/admin" component={AdminPanel} />

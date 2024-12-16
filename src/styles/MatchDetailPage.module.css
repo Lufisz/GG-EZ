@@ -1,0 +1,78 @@
+.MatchContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 40px auto;
+    max-width: 900px;
+    width: 100%;
+    background-color: #1a1a1a;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    box-sizing: border-box;
+    color: #e0e0e0;
+    text-align: center;
+}
+
+.MatchTitle {
+    font-size: 32px;
+    font-weight: bold;
+    color: #00ff99;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.EventName {
+    font-size: 20px;
+    font-weight: bold;
+    color: #00ccff;
+    margin-bottom: 10px;
+}
+
+.MatchDate {
+    font-size: 18px;
+    color: #ffcc00;
+    margin: 10px 0;
+}
+
+.MatchStatus {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ff6600;
+    margin: 10px 0;
+}
+
+.MatchStatus span {
+    color: #ff4444;
+}
+
+.MatchResult {
+    font-size: 18px;
+    font-weight: bold;
+    color: #00ffcc;
+    margin: 10px 0;
+}
+
+.ActionContainer {
+    margin-top: 20px;
+}
+
+.BackButton {
+    padding: 8px 12px;
+    font-size: 16px;
+    background-color: #333;
+    color: #fff;
+    border: 2px solid #00ff99;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.BackButton:hover {
+    background-color: #00ff99;
+    color: #333;
+    transform: scale(1.05);
+    box-shadow: 0 0 8px #00ff99;
+}

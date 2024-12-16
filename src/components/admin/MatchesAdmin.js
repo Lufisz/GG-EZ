@@ -68,7 +68,7 @@ const MatchesAdmin = () => {
   const handleDeleteMatch = async (matchId) => {
     if (window.confirm("Are you sure you want to delete this match?")) {
       try {
-        await axios.delete(`matches/${matchId}/`);
+        await axios.delete(`matches/${matchId}`);
         setMatches(matches.filter((match) => match.id !== matchId));
         setFilteredMatches(filteredMatches.filter((match) => match.id !== matchId));
       } catch (err) {

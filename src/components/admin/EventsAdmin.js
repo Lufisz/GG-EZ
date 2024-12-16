@@ -65,7 +65,7 @@ const EventsAdmin = () => {
   const handleDeleteEvent = async (eventId) => {
     if (window.confirm("Are you sure you want to delete this event?")) {
       try {
-        await axios.delete(`events/${eventId}/`);
+        await axios.delete(`events/${eventId}`);
         setEvents(events.filter((event) => event.id !== eventId));
         setFilteredEvents(filteredEvents.filter((event) => event.id !== eventId));
       } catch (err) {
@@ -99,7 +99,7 @@ const EventsAdmin = () => {
       const eventData = { ...event, image: imageUrl || null };
 
       if (event.id) {
-        await axios.put(`events/${event.id}/`, eventData);
+        await axios.put(`events/${event.id}`, eventData);
       } else {
         await axios.post("events/", eventData);
       }
