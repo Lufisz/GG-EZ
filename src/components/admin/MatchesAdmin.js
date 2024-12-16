@@ -163,7 +163,7 @@ const MatchesAdmin = () => {
               </tbody>
             </table>
           </div>
-          <div className={styles.Pagination}>
+          <div>
             <button
               className={styles.Button}
               onClick={handlePreviousPage}

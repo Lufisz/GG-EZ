@@ -1,17 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import styles from "../../src/styles/HomePage.module.css";
+import styles from "../../src/styles/EventsPage.module.css";
 
 const EventsPage = () => {
   const [events, setEvents] = useState([]);
+  const [filteredEvents, setFilteredEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
         const { data } = await axios.get("/events/");
         setEvents(data.results);
+        setFilteredEvents(data.results);
       } catch (err) {
         console.error("Error fetching events:", err);
       } finally {
@@ -22,6 +27,36 @@ const EventsPage = () => {
     fetchEvents();
   }, []);
 
+  const filterEvents = useCallback(() => {
+    let filtered = [...events];
+
+    // Filter by name
+    if (searchTerm.trim()) {
+      filtered = filtered.filter((event) =>
+        event.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    // Filter by date range
+    if (startDate) {
+      filtered = filtered.filter(
+        (event) => new Date(event.start_date) >= new Date(startDate)
+      );
+    }
+
+    if (endDate) {
+      filtered = filtered.filter(
+        (event) => new Date(event.end_date) <= new Date(endDate)
+      );
+    }
+
+    setFilteredEvents(filtered);
+  }, [events, searchTerm, startDate, endDate]); // Memoize the function based on these dependencies
+
+  useEffect(() => {
+    filterEvents(); // Call the memoized function
+  }, [filterEvents]); // Dependency array for the effect
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -29,9 +64,43 @@ const EventsPage = () => {
   return (
     <div className={styles.HomePage}>
       <h1>Upcoming Esports Events</h1>
+      {/* Filter Bar */}
+      <div className={styles.FilterBar}>
+        <input
+          type="text"
+          placeholder="Search by event name..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className={styles.SearchInput}
+        />
+        <input
+          type="date"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+          className={styles.DateInput}
+        />
+        <input
+          type="date"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+          className={styles.DateInput}
+        />
+        <button
+          onClick={() => {
+            setSearchTerm("");
+            setStartDate("");
+            setEndDate("");
+            setFilteredEvents(events); // Reset filters
+          }}
+          className={styles.ResetButton}
+        >
+          Reset Filters
+        </button>
+      </div>
+
       <div className={styles.EventsContainer}>
-        {events.length ? (
-          events.map((event) => (
+        {filteredEvents.length ? (
+          filteredEvents.map((event) => (
             <Link
               key={event.id}
               to={`/events/${event.id}`}
@@ -51,7 +120,7 @@ const EventsPage = () => {
             </Link>
           ))
         ) : (
-          <p>No events available at the moment.</p>
+          <p>No events match your filters.</p>
         )}
       </div>
     </div>
