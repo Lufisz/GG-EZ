@@ -55,7 +55,6 @@ GG-EZ is a responsive, interactive platform for tracking esports events, teams, 
 
 ### **Features to be Added**
 1. **User Authentication**:
-   - User login and registration.
    - Personalized dashboards for favorite events and matches.
 
 2. **Real-Time Match Updates**:
@@ -155,7 +154,7 @@ Ensure you have the following installed:
 
 3. Set up environment variables:
    ```bash
-   heroku config:set REACT_APP_API_URL=https://gg-ez-api-ce7093aa17cf.herokuapp.com/
+   heroku config:set REACT_APP_API_URL=https://your-api-url.com/
    ```
 
 ---
@@ -163,8 +162,10 @@ Ensure you have the following installed:
 ## **UX Design**
 
 ### **Wireframes**
-- [Home Page Wireframe](link-to-wireframe-homepage.png)  
-- [Event Page Wireframe](link-to-wireframe-eventpage.png)  
+- ![Home Page](/media/homepage.png)  
+- ![Event Page](/media/events-page.png)  
+- ![Admin Panel Page](/media/admin-panel-page.png)  
+- ![Manage Players Page](/media/manage-players.png) 
 
 **Design Decisions**:
 - Clean navigation and grid-based design for clarity.  
