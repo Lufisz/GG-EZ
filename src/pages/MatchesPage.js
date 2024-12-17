@@ -8,12 +8,13 @@ const MatchesPage = () => {
   const [filteredMatches, setFilteredMatches] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Filters
+  // Filters state
   const [searchTerm, setSearchTerm] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
 
+  // Fetch matches data from the API when the component loads
   useEffect(() => {
     const fetchMatches = async () => {
       try {
@@ -30,6 +31,7 @@ const MatchesPage = () => {
     fetchMatches();
   }, []);
 
+  // Function to filter matches based on search, date, and status
   const filterMatches = useCallback(() => {
     let filtered = [...matches];
 
@@ -54,6 +56,7 @@ const MatchesPage = () => {
           new Date(match.scheduled_time) >= new Date(startDate)
       );
     }
+    // Filter by end date
     if (endDate) {
       filtered = filtered.filter(
         (match) =>
@@ -64,10 +67,12 @@ const MatchesPage = () => {
     setFilteredMatches(filtered);
   }, [matches, searchTerm, statusFilter, startDate, endDate]);
 
+  // Run the filter function whenever filters or matches change
   useEffect(() => {
     filterMatches();
   }, [filterMatches]);
 
+  // Display loading message while matches are being fetched
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -78,6 +83,7 @@ const MatchesPage = () => {
 
       {/* Filter Bar */}
       <div className={styles.FilterBar}>
+        {/* Search input for filtering by team names */}
         <input
           type="text"
           placeholder="Search by team name..."
@@ -86,6 +92,7 @@ const MatchesPage = () => {
           className={styles.SearchInput}
         />
 
+        {/* Dropdown to filter matches by status */}
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
@@ -97,6 +104,7 @@ const MatchesPage = () => {
           <option value="completed">Completed</option>
         </select>
 
+        {/* Date inputs for filtering matches by scheduled time */}
         <input
           type="date"
           value={startDate}
@@ -110,6 +118,7 @@ const MatchesPage = () => {
           className={styles.DateInput}
         />
 
+        {/* Button to reset all filters */}
         <button
           onClick={() => {
             setSearchTerm("");
@@ -126,6 +135,7 @@ const MatchesPage = () => {
 
       {/* Matches Display */}
       <div className={styles.MatchesContainer}>
+        {/* Display filtered matches */}
         {filteredMatches.length ? (
           filteredMatches.map((match) => (
             <Link

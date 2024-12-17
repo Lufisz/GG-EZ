@@ -10,6 +10,7 @@ const MatchesDetailPage = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        // Fetch match details based on ID
         const fetchMatch = async () => {
             try {
                 const { data } = await axios.get(`/matches/${id}`);
@@ -24,7 +25,9 @@ const MatchesDetailPage = () => {
         fetchMatch();
     }, [id]);
 
+    // Show loading message while data is being fetched
     if (loading) return <p>Loading...</p>;
+    // Display message if match data is not found
     if (!match) return <p>Match not found.</p>;
 
     return (

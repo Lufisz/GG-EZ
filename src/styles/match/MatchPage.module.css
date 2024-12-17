@@ -157,3 +157,21 @@
 .MatchCardLink:hover {
   color: #00ffcc;
 }
+
+/* Responsive Fix for Small Screens */
+@media screen and (max-width: 600px) {
+  .FilterBar {
+    flex-direction: column; /* Stacks filter bar elements vertically */
+    gap: 10px;
+  }
+
+  .MatchesContainer {
+    grid-template-columns: 1fr; /* Single column layout on small screens */
+    gap: 10px;
+  }
+
+  .MatchCard {
+    max-width: 90%; /* Limits width to ensure it stays within the screen */
+    margin: 0 auto;
+  }
+}

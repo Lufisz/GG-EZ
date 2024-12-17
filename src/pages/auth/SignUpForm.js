@@ -6,6 +6,7 @@ import { Form, Button, Alert } from "react-bootstrap";
 import axios from "axios";
 
 const SignUpForm = () => {
+  // State to hold form input values
   const [signUpData, setSignUpData] = useState({
     username: "",
     email: "",
@@ -18,6 +19,7 @@ const SignUpForm = () => {
   const [errors, setErrors] = useState({});
   const history = useHistory();
 
+  // Handle form input changes
   const handleChange = (event) => {
     setSignUpData({
       ...signUpData,
@@ -25,20 +27,25 @@ const SignUpForm = () => {
     });
   };
 
+  // Handle form submission for user registration
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      // Send a POST request to the registration endpoint
       await axios.post("/dj-rest-auth/registration/", signUpData);
       history.push("/signin");
     } catch (err) {
+      // Set errors returned from the backend
       setErrors(err.response?.data || {});
     }
   };
 
   return (
     <div className={styles.Container}>
+      {/* Sign-Up Form Header */}
       <h1 className={styles.Header}>Sign Up</h1>
       <Form onSubmit={handleSubmit}>
+        {/* Username Input */}
         <Form.Group controlId="username">
           <Form.Label className="d-none">Username</Form.Label>
           <Form.Control
@@ -57,6 +64,7 @@ const SignUpForm = () => {
           </Alert>
         ))}
 
+        {/* Email Input */}
         <Form.Group controlId="email">
           <Form.Label className="d-none">Email</Form.Label>
           <Form.Control
@@ -75,6 +83,7 @@ const SignUpForm = () => {
           </Alert>
         ))}
 
+        {/* Password Input */}
         <Form.Group controlId="password1">
           <Form.Label className="d-none">Password</Form.Label>
           <Form.Control
@@ -93,6 +102,7 @@ const SignUpForm = () => {
           </Alert>
         ))}
 
+        {/* Confirm Password Input */}
         <Form.Group controlId="password2">
           <Form.Label className="d-none">Confirm Password</Form.Label>
           <Form.Control
@@ -111,6 +121,7 @@ const SignUpForm = () => {
           </Alert>
         ))}
 
+        {/* Role Selection Dropdown */}
         <Form.Group controlId="role">
           <Form.Label className="d-none">Role</Form.Label>
           <Form.Control
@@ -130,6 +141,7 @@ const SignUpForm = () => {
           </Alert>
         ))}
 
+        {/* Submit Button */}
         <Button
           className={`${btnStyles.Button} ${btnStyles.Wide} ${btnStyles.Bright}`}
           type="submit"
@@ -137,12 +149,16 @@ const SignUpForm = () => {
         >
           Sign Up
         </Button>
+
+        {/* Non-Field Errors */}
         {errors.non_field_errors?.map((message, idx) => (
           <Alert key={idx} variant="warning" className="mt-3">
             {message}
           </Alert>
         ))}
       </Form>
+
+      {/* Link to Sign-In Page */}
       <div className="mt-3">
         <Link className={styles.Link} to="/signin">
           Already have an account? <span>Sign in</span>

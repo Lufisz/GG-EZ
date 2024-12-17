@@ -1,3 +1,4 @@
+/* Main container for the homepage layout */
 .HomeContainer {
     text-align: center;
     padding: 20px;
@@ -7,6 +8,7 @@
     font-family: "Arial", sans-serif;
 }
 
+/* Hero section at the top of the homepage */
 .HeroSection {
     margin-bottom: 40px;
     padding: 40px 20px;
@@ -26,6 +28,7 @@
     margin-bottom: 20px;
 }
 
+/* Button for Call-to-Action (CTA) in the hero section */
 .CTAButton {
     background-color: #00ff99;
     color: #121212;
@@ -40,6 +43,7 @@
     background-color: #00cc77;
 }
 
+/* Section for event or match highlights */
 .HighlightsSection {
     margin: 20px auto;
     max-width: 1200px;
@@ -51,6 +55,7 @@
     margin-bottom: 20px;
 }
 
+/* Container for card grid layout */
 .CardContainer {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -58,6 +63,7 @@
     justify-items: center;
 }
 
+/* Individual card styling for events or matches */
 .Card {
     background-color: #1a1a1a;
     border: 1px solid #333;
@@ -94,6 +100,8 @@
     text-decoration: underline;
 }
 
+
+/* Section for navigation links */
 .NavigationSection {
     margin-top: 40px;
 }
@@ -104,6 +112,7 @@
     color: #00ff99;
 }
 
+/* Styling for navigation links */
 .NavLinks a {
     margin: 0 10px;
     color: #00ccff;

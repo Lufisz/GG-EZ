@@ -25,6 +25,7 @@ function App() {
   const history = useHistory();
   const setCurrentUser = useSetCurrentUser();
 
+  // Fetch current user on initial app load
   useEffect(() => {
     const fetchCurrentUser = async () => {
       const token = localStorage.getItem("accessToken");
@@ -46,11 +47,16 @@ function App() {
   }, [setCurrentUser, history]);
 
   return (
+    // Provide current user context to the entire app
     <CurrentUserProvider>
       <div className={styles.App}>
+        {/* Navigation Bar */}
         <NavBar />
+
+        {/* Main container for all pages */}
         <Container className={styles.Main}>
           <Switch>
+            {/* Public Routes */}
             <Route exact path="/" component={HomePage} />
             <Route exact path="/events" component={EventsPage} />
             <Route path="/events/:id" component={EventDetailPage} />
@@ -58,14 +64,19 @@ function App() {
             <Route path="/matches/:id" component={MatchDetailPage} />
             <Route exact path="/signin" component={SignInForm} />
             <Route exact path="/signup" component={SignUpForm} />
+
+            {/* Admin Routes */}
             <Route exact path="/admin" component={AdminPanel} />
             <Route exact path="/admin/teams" component={TeamsAdmin} />
             <Route exact path="/admin/events" component={EventsAdmin} />
             <Route exact path="/admin/matches" component={MatchesAdmin} />
             <Route exact path="/admin/players" component={PlayersAdmin} />
+
+            {/* Catch-all for unmatched routes */}
             <Route render={() => <p>Page not found!</p>} />
           </Switch>
         </Container>
+        {/* Footer */}
         <Footer />
       </div>
     </CurrentUserProvider>

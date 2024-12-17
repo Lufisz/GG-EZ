@@ -1,3 +1,4 @@
+/* Container for centering content and aligning it vertically and horizontally */
 .Container {
     display: flex;
     flex-direction: column;
@@ -6,12 +7,14 @@
     padding: 20px;
 }
 
+/* Header styling for the main titles */
 .Header {
     font-size: 2rem;
     margin-bottom: 20px;
     color: #fff;
 }
 
+/* Layout container for displaying options with proper spacing */
 .Options {
     display: flex;
     gap: 20px;
@@ -19,6 +22,7 @@
     justify-content: center;
 }
 
+/* Styling for individual option cards */
 .OptionCard {
     background-color: #1a1a1a;
     color: #fff;
@@ -32,22 +36,26 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
 }
 
+/* Hover effect for option cards */
 .OptionCard:hover {
     transform: scale(1.1);
     box-shadow: 0 6px 15px rgba(0, 255, 153, 0.8);
     border-color: #00ff99;
 }
 
+/* Header text inside the option cards */
 .OptionCard h2 {
     margin: 0;
     font-size: 1.2rem;
     color: #00ff99;
 }
 
+/* Hover effect for option card headers */
 .OptionCard h2:hover {
     color: #00ffcc;
 }
 
+/* General button styling */
 .Button {
     margin: 10px;
     padding: 10px 20px;
@@ -57,12 +65,13 @@
     border-radius: 5px;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8); /* Initial shadow */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
 }
 
+/* Hover effect for buttons */
 .Button:hover {
     background-color: #00ff99;
-    box-shadow: 0 6px 15px rgba(0, 255, 153, 0.8); /* Glow effect */
+    box-shadow: 0 6px 15px rgba(0, 255, 153, 0.8);
     transform: scale(1.05);
     color: #000;
 }

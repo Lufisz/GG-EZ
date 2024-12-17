@@ -1,3 +1,4 @@
+/* General Home Page Container */
 .HomePage {
     text-align: center;
     padding: 20px;
@@ -6,6 +7,7 @@
     font-family: 'Arial', sans-serif;
 }
 
+/* Main Heading */
 .HomePage h1 {
     font-size: 36px;
     font-weight: bold;
@@ -14,9 +16,10 @@
     text-transform: uppercase;
 }
 
+/* Container for Event Cards */
 .EventsContainer {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjust layout */
     gap: 20px;
     justify-items: center;
     margin: 0 auto;
@@ -24,6 +27,7 @@
     padding: 20px;
 }
 
+/* Individual Event Card */
 .EventCard {
     background-color: #1a1a1a;
     border: 2px solid #333;
@@ -36,11 +40,13 @@
     overflow: hidden;
 }
 
+/* Hover Effect */
 .EventCard:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 15px rgba(0, 255, 153, 0.8);
 }
 
+/* Event Card Image */
 .EventCard img {
     width: 100%;
     height: 200px;
@@ -49,6 +55,7 @@
     margin-bottom: 15px;
 }
 
+/* Event Card Title */
 .EventCard h2 {
     font-size: 24px;
     color: #00ff99;
@@ -59,6 +66,7 @@
     color: #00ffcc;
 }
 
+/* Event Card Description */
 .EventCard p {
     font-size: 16px;
     margin: 5px 0;
@@ -66,13 +74,14 @@
     line-height: 1.5;
 }
 
+/* Event Date */
 .EventCard .EventDate {
     font-weight: bold;
     color: #ff6600;
     margin-bottom: 10px;
 }
 
-/* Filter Bar Styling */
+/* Filter Bar Container */
 .FilterBar {
     display: flex;
     flex-wrap: wrap;
@@ -86,6 +95,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* Search Input and Date Input */
 .SearchInput,
 .DateInput {
     flex: 1;
@@ -113,6 +123,7 @@
     color: #fff;
 }
 
+/* Reset Button */
 .ResetButton {
     background-color: #ff4444;
     color: #fff;
@@ -126,4 +137,21 @@
 
 .ResetButton:hover {
     background-color: #ff0000;
+}
+
+/* Mobile Fix for Small Screens */
+@media screen and (max-width: 768px) {
+    .EventsContainer {
+        grid-template-columns: 1fr; /* Ensure a single column layout on smaller screens */
+        padding: 10px; /* Adjust padding for mobile */
+    }
+
+    .EventCard {
+        max-width: 100%; /* Ensure cards take full width */
+        margin: 0 10px; /* Add some margin for better spacing */
+    }
+
+    .HomePage h1 {
+        font-size: 28px; /* Decrease heading size for smaller screens */
+    }
 }

@@ -42,6 +42,7 @@ const HomePage = () => {
         };
     }, []);
 
+    // Show loading indicator while data is being fetched
     if (loading) return <p>Loading...</p>;
 
     return (
@@ -50,6 +51,7 @@ const HomePage = () => {
             <section className={styles.HeroSection}>
                 <h1>Welcome to Esports Event Tracker</h1>
                 <p>Your one-stop solution for tracking esports events and matches.</p>
+                {/* CTA Button to navigate to the Events page */}
                 <Link to="/events" className={styles.CTAButton}>
                     View Events
                 </Link>
@@ -59,17 +61,20 @@ const HomePage = () => {
             <section className={styles.HighlightsSection}>
                 <h2>Upcoming Events</h2>
                 <div className={styles.CardContainer}>
+                    {/* Display the first 3 upcoming events */}
                     {events.length > 0 ? (
                         events.map((event) => (
                             <div key={event.id} className={styles.Card}>
                                 <h3>{event.name}</h3>
                                 <p>{event.start_date} - {event.end_date}</p>
+                                {/* Link to the detailed view of the event */}
                                 <Link to={`/events/${event.id}`} className={styles.DetailsLink}>
                                     See Details
                                 </Link>
                             </div>
                         ))
                     ) : (
+                        // Message displayed if no events are available
                         <p>No upcoming events available.</p>
                     )}
                 </div>
@@ -79,17 +84,20 @@ const HomePage = () => {
             <section className={styles.HighlightsSection}>
                 <h2>Upcoming Matches</h2>
                 <div className={styles.CardContainer}>
+                    {/* Display the first 3 upcoming matches */}
                     {matches.length > 0 ? (
                         matches.map((match) => (
                             <div key={match.id} className={styles.Card}>
                                 <h3>{match.team1_name} vs {match.team2_name}</h3>
                                 <p>{match.scheduled_time}</p>
+                                {/* Link to the detailed view of the match */}
                                 <Link to={`/matches/${match.id}`} className={styles.DetailsLink}>
                                     See Details
                                 </Link>
                             </div>
                         ))
                     ) : (
+                        // Message displayed if no matches are available
                         <p>No upcoming matches available.</p>
                     )}
                 </div>

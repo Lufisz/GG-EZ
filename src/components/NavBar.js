@@ -5,12 +5,15 @@ import styles from "../styles/components/NavBar.module.css";
 import { useCurrentUser, useSetCurrentUser } from "../contexts/CurrentUserContext";
 import useClickOutsideToggle from "../hooks/useClickOutsideToggle";
 
+// NavBar Component: Navigation bar with dynamic options based on the user's login state
 const NavBar = () => {
   const currentUser = useCurrentUser(); // Access the current user
   const { handleLogout } = useSetCurrentUser();
 
+  // Manage Navbar toggle behavior with click outside detection
   const { expanded, setExpanded, ref } = useClickOutsideToggle();
 
+  // Icons displayed for logged-in users (includes Log Out)
   const loggedInIcons = (
     <>
       <Nav.Link className={styles.NavLink} onClick={handleLogout}>
@@ -19,6 +22,7 @@ const NavBar = () => {
     </>
   );
 
+  // Icons displayed for users who are not logged in (Sign In and Sign Up)
   const loggedOutIcons = (
     <>
       <NavLink
@@ -39,17 +43,22 @@ const NavBar = () => {
   );
 
   return (
+    // Main Navbar component
     <Navbar expanded={expanded} expand="md" fixed="top" className={styles.NavBar}>
       <Container>
+        {/* Navbar Brand */}
         <Navbar.Brand className={styles.Logo}>GG-EZ</Navbar.Brand>
+        {/* Navbar toggle for small screens */}
         <Navbar.Toggle
           aria-controls="basic-navbar-nav"
           ref={ref}
           onClick={() => setExpanded(!expanded)}
           className={styles.CustomToggle}
         />
+        {/* Collapsible Navbar content */}
         <Navbar.Collapse id="basic-navbar-nav" style={{ backgroundColor: "#1a1a1a" }}>
           <Nav className="ml-auto text-left">
+            {/* Home link */}
             <NavLink
               to="/"
               exact
@@ -58,6 +67,7 @@ const NavBar = () => {
             >
               <i className="fas fa-home"></i> Home
             </NavLink>
+            {/* Events link */}
             <NavLink
               to="/events"
               className={styles.NavLink}
@@ -65,6 +75,7 @@ const NavBar = () => {
             >
               <i className="fas fa-calendar-alt"></i> Events
             </NavLink>
+            {/* Matches link */}
             <NavLink
               to="/matches"
               className={styles.NavLink}
@@ -72,6 +83,7 @@ const NavBar = () => {
             >
               <i className="fas fa-gamepad"></i> Matches
             </NavLink>
+            {/* Admin Panel link (only for staff users) */}
             {currentUser?.role === "staff_user" && (
               <NavLink
                 to="/admin"
@@ -81,6 +93,7 @@ const NavBar = () => {
                 <i className="fas fa-tools"></i> Admin Panel
               </NavLink>
             )}
+            {/* Display either logged-in or logged-out icons */}
             {currentUser ? loggedInIcons : loggedOutIcons}
           </Nav>
         </Navbar.Collapse>

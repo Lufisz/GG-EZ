@@ -10,17 +10,20 @@ import CustomToast from "../../components/CustomToast";
 const SignInForm = () => {
   const { setCurrentUser } = useSetCurrentUser();
 
+  // State to hold user input data for sign-in
   const [signInData, setSignInData] = useState({
     username: "",
     password: "",
   });
   const { username, password } = signInData;
 
+  // State to handle errors and UI toast
   const [errors, setErrors] = useState({});
   const [showToast, setShowToast] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState("");
   const history = useHistory();
 
+  // Update form input values as the user types
   const handleChange = (event) => {
     setSignInData({
       ...signInData,
@@ -28,22 +31,28 @@ const SignInForm = () => {
     });
   };
 
+  // Handle form submission for user sign-in
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      // Send sign-in data to the backend login endpoint
       const { data } = await axios.post("/dj-rest-auth/login/", signInData);
 
+      // Store the access token and set the authorization header for future requests
       const accessToken = data.access_token;
       axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
       localStorage.setItem("accessToken", accessToken);
 
-      const roleResponse = await axios.get("users/current-user-role/");
+      // Fetch the user's role to update the context and local storage
+      const roleResponse = await axios.get("/current-user-role/");
       setCurrentUser(roleResponse.data);
       localStorage.setItem("currentUser", JSON.stringify(roleResponse.data));
 
+      // Set the username to display the success toast
       setLoggedInUser(roleResponse.data.username);
       setShowToast(true);
 
+      // Redirect the user to the home page after a short delay
       setTimeout(() => {
         history.push("/");
       }, 1000);
@@ -55,6 +64,7 @@ const SignInForm = () => {
 
   return (
     <div className={styles.Container}>
+      {/* Toast notification for successful login */}
       <CustomToast
         show={showToast}
         onClose={() => setShowToast(false)}
@@ -62,6 +72,7 @@ const SignInForm = () => {
         username={loggedInUser}
       />
 
+      {/* Sign-in form */}
       <h1 className={styles.Header}>Sign In</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="username">
@@ -76,12 +87,14 @@ const SignInForm = () => {
             required
           />
         </Form.Group>
+        {/* Display errors related to the username */}
         {errors.username?.map((message, idx) => (
           <Alert key={idx} variant="warning">
             {message}
           </Alert>
         ))}
 
+        {/* Password input */}
         <Form.Group controlId="password">
           <Form.Label className="d-none">Password</Form.Label>
           <Form.Control
@@ -94,24 +107,29 @@ const SignInForm = () => {
             required
           />
         </Form.Group>
+        {/* Display errors related to the password */}
         {errors.password?.map((message, idx) => (
           <Alert key={idx} variant="warning">
             {message}
           </Alert>
         ))}
 
+        {/* Submit button */}
         <Button
           className={`${btnStyles.Button} ${btnStyles.Wide} ${btnStyles.Bright}`}
           type="submit"
         >
           Sign In
         </Button>
+        {/* Display non-field errors (e.g., general errors) */}
         {errors.non_field_errors?.map((message, idx) => (
           <Alert key={idx} variant="warning" className="mt-3">
             {message}
           </Alert>
         ))}
       </Form>
+
+      {/* Link to the Sign-Up page */}
       <div className="mt-3">
         <Link className={styles.Link} to="/signup">
           Don&apos;t have an account? <span>Sign up now!</span>

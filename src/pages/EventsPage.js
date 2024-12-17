@@ -11,6 +11,7 @@ const EventsPage = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
+  // Fetch all events from the API when the component mounts
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -27,6 +28,7 @@ const EventsPage = () => {
     fetchEvents();
   }, []);
 
+  // Function to filter events based on search term and date range
   const filterEvents = useCallback(() => {
     let filtered = [...events];
 
@@ -44,6 +46,7 @@ const EventsPage = () => {
       );
     }
 
+    // Filter by end date
     if (endDate) {
       filtered = filtered.filter(
         (event) => new Date(event.end_date) <= new Date(endDate)
@@ -53,10 +56,12 @@ const EventsPage = () => {
     setFilteredEvents(filtered);
   }, [events, searchTerm, startDate, endDate]); // Memoize the function based on these dependencies
 
+  // Re-run the filter function when search term, start date, or end date changes
   useEffect(() => {
     filterEvents(); // Call the memoized function
   }, [filterEvents]); // Dependency array for the effect
 
+  // Show a loading message until data is fetched
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -73,18 +78,24 @@ const EventsPage = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
           className={styles.SearchInput}
         />
+
+        {/* Input for start date filter */}
         <input
           type="date"
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
           className={styles.DateInput}
         />
+
+        {/* Input for end date filter */}
         <input
           type="date"
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
           className={styles.DateInput}
         />
+
+        {/* Button to reset all filters */}
         <button
           onClick={() => {
             setSearchTerm("");
@@ -98,7 +109,9 @@ const EventsPage = () => {
         </button>
       </div>
 
+      {/* Events Container */}
       <div className={styles.EventsContainer}>
+        {/* Display filtered events */}
         {filteredEvents.length ? (
           filteredEvents.map((event) => (
             <Link
@@ -111,8 +124,11 @@ const EventsPage = () => {
                   src={event.image || "/default-event.jpg"}
                   alt={event.name}
                 />
+                {/* Event Name */}
                 <h2>{event.name}</h2>
+                {/* Event Description */}
                 <p>{event.description}</p>
+                {/* Event Dates */}
                 <p className={styles.EventDate}>
                   {event.start_date} - {event.end_date}
                 </p>

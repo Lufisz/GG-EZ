@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "../../styles/admin/AdminShared.module.css";
 
+// TeamsAdmin Component: Manages and displays teams in the admin panel
 const TeamsAdmin = () => {
   // State to manage teams data
   const [teams, setTeams] = useState([]);
@@ -129,6 +130,7 @@ const TeamsAdmin = () => {
     }
   };
 
+  // Fetch the next page of teams
   const handleNextPage = () => {
     if (nextPage) {
       const secureUrl = nextPage.replace(/^http:/, "https:");
@@ -136,6 +138,7 @@ const TeamsAdmin = () => {
     }
   };
 
+  // Fetch the previous page of teams
   const handlePreviousPage = () => {
     if (previousPage) {
       const secureUrl = previousPage.replace(/^http:/, "https:");
@@ -150,6 +153,7 @@ const TeamsAdmin = () => {
 
   return (
     <>
+      {/* Render team list or the form for adding/editing */}
       {!isEditing ? (
         <div className={styles.Container}>
           <h1 className={styles.Header}>Manage Teams</h1>
@@ -211,6 +215,7 @@ const TeamsAdmin = () => {
             </tbody>
           </table>
           <div>
+            {/* Pagination Controls */}
             <button
               className={styles.Button}
               onClick={handlePreviousPage}
@@ -239,6 +244,7 @@ const TeamsAdmin = () => {
   );
 };
 
+// TeamForm Component: Handles adding or editing team details
 const TeamForm = ({ team, onSave, onCancel }) => {
   const [formData, setFormData] = useState(
     team || { name: "", description: "", logo: "" }

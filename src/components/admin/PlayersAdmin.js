@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "../../styles/admin/AdminShared.module.css";
 
+// PlayersAdmin Component: Manages and displays players in the admin panel
 const PlayersAdmin = () => {
   // State to manage players data
   const [players, setPlayers] = useState([]);
@@ -129,6 +130,7 @@ const PlayersAdmin = () => {
     }
   };
 
+  // Fetch the next page of players
   const handleNextPage = () => {
     if (nextPage) {
       const secureUrl = nextPage.replace(/^http:/, "https:");
@@ -136,6 +138,7 @@ const PlayersAdmin = () => {
     }
   };
 
+  // Fetch the previous page of players
   const handlePreviousPage = () => {
     if (previousPage) {
       const secureUrl = previousPage.replace(/^http:/, "https:");
@@ -150,6 +153,7 @@ const PlayersAdmin = () => {
 
   return (
     <>
+      {/* Display player list or player form */}
       {!isEditing ? (
         <div className={styles.Container}>
           <h1 className={styles.Header}>Manage Players</h1>
@@ -237,6 +241,7 @@ const PlayersAdmin = () => {
   );
 };
 
+// PlayerForm Component: Form to add or edit a player
 const PlayerForm = ({ player, onSave, onCancel }) => {
   const [formData, setFormData] = useState(
     player || { name: "", role: "", avatar: "", team: "" }

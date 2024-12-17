@@ -1,74 +1,84 @@
+/* Main container styling for centered layout */
 .Container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    display: flex; /* Enables flexbox layout */
+    flex-direction: column; /* Arranges content in a column */
+    align-items: center; /* Centers items horizontally */
+    justify-content: center; /* Centers items vertically */
     border: none;
-    border-radius: 10px;
-    padding: 30px;
-    background-color: #1a1a1a;
-    max-width: 400px;
-    margin: 50px auto;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+    border-radius: 10px; /* Rounded corners */
+    padding: 30px; /* Inner spacing */
+    background-color: #1a1a1a; /* Dark background */
+    max-width: 400px; /* Limits width */
+    margin: 50px auto; /* Centers container with vertical spacing */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8); /* Adds shadow for depth */
 }
 
+/* Input field styling */
 .Input {
-    background-color: #1a1a1a;
-    border: 2px solid #333;
-    color: #e0e0e0;
-    border-radius: 5px;
-    padding: 10px;
-    width: 100%;
-    box-sizing: border-box;
-    transition: border-color 0.3s, box-shadow 0.3s;
+    background-color: #1a1a1a; /* Background color matches container */
+    border: 2px solid #333; /* Border styling */
+    color: #e0e0e0; /* Light text color */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Inner spacing */
+    width: 100%; /* Takes full container width */
+    box-sizing: border-box; /* Includes padding and border in the width */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition for hover/focus */
     height: auto;
-    text-align: center;
+    text-align: center; /* Centers text inside input */
 }
 
+/* Placeholder text styling */
 .Input::placeholder {
-    color: #e0e0e0;
+    color: #e0e0e0; /* Placeholder color */
 }
 
+/* Hover effect for input */
 .Input:hover {
-    border-color: #00ff99;
-    box-shadow: 0 0 5px #00ff99;
+    border-color: #00ff99; /* Highlight border on hover */
+    box-shadow: 0 0 5px #00ff99; /* Glow effect */
 }
   
+/* Focus effect for input */
 .Input:focus {
-    border-color: #00ff99;
-    box-shadow: 0 0 5px #00ff99;
+    border-color: #00ff99; /* Highlight border on focus */
+    box-shadow: 0 0 5px #00ff99; /* Glow effect on focus */
     background-color: #1a1a1a;
-    color: #e0e0e0;
+    color: #e0e0e0; /* Ensures text remains readable */
 }
 
+/* Dropdown option styling inside input */
 .Input option {
-    color: #e0e0e0;
-    background-color: #1a1a1a;
+    color: #e0e0e0; /* Text color */
+    background-color: #1a1a1a; /* Background color */
 }
 
+/* Header styling for titles */
 .Header {
-    font-weight: bold;
-    font-size: 24px;
-    text-align: center;
-    text-transform: uppercase;
-    color: #00ff99;
-    margin-bottom: 20px;
+    font-weight: bold; /* Bold text */
+    font-size: 24px; /* Large font size */
+    text-align: center; /* Centers text */
+    text-transform: uppercase; /* Uppercase text */
+    color: #00ff99; /* Highlighted color */
+    margin-bottom: 20px; /* Spacing below the header */
 }
 
+/* Link styling */
 .Link {
-    color: #ff6600;
-    text-align: center;
-    text-decoration: none;
-    margin-top: 15px;
+    color: #ff6600; /* Orange text color */
+    text-align: center; /* Centers text */
+    text-decoration: none; /* Removes underline */
+    margin-top: 15px; /* Adds spacing above link */
 }
 
+/* Highlight part of the link */
 .Link span {
-    color: #00ff99;
+    color: #00ff99; /* Different color for span inside link */
 }
 
+/* Button styling for actions */
 .Button {
-    margin-top: 20px;
-    width: 100%;
-    max-width: 350px;
-    padding: 10px;
+    margin-top: 20px; /* Spacing above button */
+    width: 100%; /* Takes full width */
+    max-width: 350px; /* Limits maximum width */
+    padding: 10px; /* Inner padding */
 }

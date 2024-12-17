@@ -3,6 +3,7 @@ import axios from "axios";
 import styles from "../../styles/admin/AdminShared.module.css";
 
 const EventsAdmin = () => {
+  // State to store all events, filtered events, and related UI controls
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -12,10 +13,12 @@ const EventsAdmin = () => {
   const [nextPage, setNextPage] = useState(null);
   const [previousPage, setPreviousPage] = useState(null);
 
+  // Fetch events when the component mounts
   useEffect(() => {
     fetchEvents();
   }, []);
 
+  // Dynamically filter events based on the search term
   useEffect(() => {
     if (searchTerm.trim()) {
       const lowerCaseSearchTerm = searchTerm.toLowerCase();
@@ -30,6 +33,7 @@ const EventsAdmin = () => {
     }
   }, [searchTerm, events]);
 
+  // Fetch events from the API (supports pagination)
   const fetchEvents = async (url = "events/") => {
     try {
       const { data } = await axios.get(url);
@@ -52,16 +56,19 @@ const EventsAdmin = () => {
     }
   };
 
+  // Handle adding a new event
   const handleAddEvent = () => {
     setCurrentEvent(null);
     setIsEditing(true);
   };
 
+  // Handle editing an existing event
   const handleEditEvent = (event) => {
     setCurrentEvent(event);
     setIsEditing(true);
   };
 
+  // Handle deleting an event (confirmation before delete)
   const handleDeleteEvent = async (eventId) => {
     if (window.confirm("Are you sure you want to delete this event?")) {
       try {
@@ -74,6 +81,7 @@ const EventsAdmin = () => {
     }
   };
 
+  // Save an event (handles both add and edit functionality)
   const handleSave = async (event, file) => {
     try {
       let imageUrl = event.image;
@@ -96,7 +104,7 @@ const EventsAdmin = () => {
         }
       }
   
-      // Prepare the payload
+      // Prepare event data for submission
       const eventData = {
         name: event.name,
         description: event.description || "",
@@ -107,6 +115,7 @@ const EventsAdmin = () => {
   
       console.log("Payload being sent to backend:", eventData);
   
+      // Determine whether to create or update the event
       if (event.id) {
         await axios.put(`events/${event.id}`, eventData); // Use PUT for updates
       } else {
@@ -120,14 +129,17 @@ const EventsAdmin = () => {
     }
   };
 
+  // Navigate to the next page of events
   const handleNextPage = () => {
     if (nextPage) fetchEvents(nextPage.replace(/^http:/, "https:"));
   };
 
+  // Navigate to the previous page of events
   const handlePreviousPage = () => {
     if (previousPage) fetchEvents(previousPage.replace(/^http:/, "https:"));
   };
 
+  // Show loading spinner while events are being fetched
   if (loading) {
     return <div className={styles.Container}>Loading...</div>;
   }
@@ -149,6 +161,7 @@ const EventsAdmin = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
+          {/* Event Table */}
           <div className={styles.TableWrapper}>
             <table className={`${styles.Table} ${styles.EventsTable}`}>
               <thead>
@@ -198,6 +211,7 @@ const EventsAdmin = () => {
               </tbody>
             </table>
           </div>
+          {/* Pagination Controls */}
           <div>
             <button
               className={styles.Button}
@@ -216,6 +230,7 @@ const EventsAdmin = () => {
           </div>
         </div>
       ) : (
+        // Render the form for adding or editing events
         <EventForm
           event={currentEvent}
           onSave={handleSave}

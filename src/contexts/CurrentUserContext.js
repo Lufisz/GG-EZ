@@ -3,16 +3,20 @@ import { createContext, useContext, useEffect, useState, useCallback } from "rea
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
+// Create context for storing the current user and providing setCurrentUser functions
 export const CurrentUserContext = createContext();
 export const SetCurrentUserContext = createContext();
 
+// Custom hooks for accessing current user and the function to set user state
 export const useCurrentUser = () => useContext(CurrentUserContext);
 export const useSetCurrentUser = () => useContext(SetCurrentUserContext);
 
+// Provider component for managing the current user state
 export const CurrentUserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const history = useHistory();
 
+  // Handle user logout by clearing tokens and user state
   const handleLogout = useCallback(async () => {
     try {
       await axios.post("/dj-rest-auth/logout/");
@@ -25,6 +29,7 @@ export const CurrentUserProvider = ({ children }) => {
     }
   }, [history]);
 
+  // Fetch the current user's role from the backend
   const fetchCurrentUserRole = useCallback(async () => {
     try {
       const { data } = await axios.get("users/current-user-role/");
@@ -36,6 +41,7 @@ export const CurrentUserProvider = ({ children }) => {
     }
   }, [handleLogout]);
 
+  // Fetch the current user data when the component mounts
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
@@ -51,12 +57,14 @@ export const CurrentUserProvider = ({ children }) => {
     fetchCurrentUser();
   }, [handleLogout, fetchCurrentUserRole]);
 
+  // Axios interceptor to handle expired access tokens (401 errors)
   useEffect(() => {
     const responseInterceptor = axios.interceptors.response.use(
       (response) => response,
       async (error) => {
         if (error.response?.status === 401) {
           try {
+            // Attempt to refresh the access token using the refresh token
             const { data } = await axios.post("/dj-rest-auth/token/refresh/", {
               refresh: localStorage.getItem("refreshToken"),
             });
@@ -74,11 +82,13 @@ export const CurrentUserProvider = ({ children }) => {
       }
     );
 
+    // Cleanup the interceptor on component unmount
     return () => {
       axios.interceptors.response.eject(responseInterceptor);
     };
   }, [handleLogout]);
 
+  // Provide currentUser state and setCurrentUser functions to children components
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <SetCurrentUserContext.Provider value={{ setCurrentUser, handleLogout }}>

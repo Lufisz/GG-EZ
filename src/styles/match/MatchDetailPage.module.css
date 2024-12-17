@@ -1,3 +1,4 @@
+/* Container for Match Details Page */
 .MatchContainer {
     position: relative;
     display: flex;
@@ -16,6 +17,7 @@
     text-align: center;
 }
 
+/* Main Title Styling for Match */
 .MatchTitle {
     font-size: 32px;
     font-weight: bold;
@@ -24,6 +26,7 @@
     text-transform: uppercase;
 }
 
+/* Styling for Event Name */
 .EventName {
     font-size: 20px;
     font-weight: bold;
@@ -31,12 +34,14 @@
     margin-bottom: 10px;
 }
 
+/* Styling for Match Date */
 .MatchDate {
     font-size: 18px;
     color: #ffcc00;
     margin: 10px 0;
 }
 
+/* Styling for Match Status */
 .MatchStatus {
     font-size: 18px;
     font-weight: bold;
@@ -44,10 +49,12 @@
     margin: 10px 0;
 }
 
+/* Span for Highlighted Match Status Text */
 .MatchStatus span {
     color: #ff4444;
 }
 
+/* Styling for Match Result */
 .MatchResult {
     font-size: 18px;
     font-weight: bold;
@@ -55,10 +62,13 @@
     margin: 10px 0;
 }
 
+/* Container for Action Buttons */
 .ActionContainer {
     margin-top: 20px;
 }
 
+
+/* Back Button Styling */
 .BackButton {
     margin: 10px;
     padding: 6px 12px;
@@ -71,6 +81,7 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
 }
 
+/* Hover Effect for Back Button */
 .BackButton:hover {
     transform: scale(1.05);
     box-shadow: 0 0 8px #00ff99;

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "../../styles/admin/AdminShared.module.css";
 
+// MatchesAdmin Component: Manages and displays matches in the admin panel
 const MatchesAdmin = () => {
   const [matches, setMatches] = useState([]);
   const [filteredMatches, setFilteredMatches] = useState([]);
@@ -12,10 +13,12 @@ const MatchesAdmin = () => {
   const [nextPage, setNextPage] = useState(null);
   const [previousPage, setPreviousPage] = useState(null);
 
+  // Fetch matches when the component mounts
   useEffect(() => {
     fetchMatches();
   }, []);
 
+  // Search term effect: Filters matches based on user input
   useEffect(() => {
     if (searchTerm.trim()) {
       const lowerCaseSearchTerm = searchTerm.toLowerCase();
@@ -33,6 +36,7 @@ const MatchesAdmin = () => {
     }
   }, [searchTerm, matches]);
 
+  // Function to fetch matches from the backend API
   const fetchMatches = async (url = "matches/") => {
     try {
       const { data } = await axios.get(url);
@@ -55,16 +59,19 @@ const MatchesAdmin = () => {
     }
   };
 
+  // Open the form for adding a new match
   const handleAddMatch = () => {
     setCurrentMatch(null);
     setIsEditing(true);
   };
 
+  // Open the form for editing an existing match
   const handleEditMatch = (match) => {
     setCurrentMatch(match);
     setIsEditing(true);
   };
 
+  // Delete a match by ID with confirmation
   const handleDeleteMatch = async (matchId) => {
     if (window.confirm("Are you sure you want to delete this match?")) {
       try {
@@ -77,6 +84,7 @@ const MatchesAdmin = () => {
     }
   };
 
+  // Save a new or edited match to the backend
   const handleSave = async (match) => {
     try {
       if (match.id) {
@@ -91,20 +99,24 @@ const MatchesAdmin = () => {
     }
   };
 
+  // Fetch the next page of matches
   const handleNextPage = () => {
     if (nextPage) fetchMatches(nextPage.replace(/^http:/, "https:"));
   };
 
+  // Fetch the previous page of matches
   const handlePreviousPage = () => {
     if (previousPage) fetchMatches(previousPage.replace(/^http:/, "https:"));
   };
 
+  // Show loading indicator while data is being fetched
   if (loading) {
     return <div className={styles.Container}>Loading...</div>;
   }
 
   return (
     <>
+      {/* Display the matches table or the edit form */}
       {!isEditing ? (
         <div className={styles.Container}>
           <h1 className={styles.Header}>Manage Matches</h1>
@@ -121,6 +133,7 @@ const MatchesAdmin = () => {
             />
           </div>
           <div className={styles.TableWrapper}>
+            {/* Table displaying matches */}
             <table className={`${styles.Table} ${styles.MatchesTable}`}>
               <thead>
                 <tr>
@@ -163,6 +176,7 @@ const MatchesAdmin = () => {
               </tbody>
             </table>
           </div>
+          {/* Pagination controls */}
           <div>
             <button
               className={styles.Button}
@@ -181,12 +195,18 @@ const MatchesAdmin = () => {
           </div>
         </div>
       ) : (
-        <MatchForm match={currentMatch} onSave={handleSave} onCancel={() => setIsEditing(false)} />
+        // Render MatchForm for adding/editing a match
+        <MatchForm 
+          match={currentMatch} 
+          onSave={handleSave} 
+          onCancel={() => setIsEditing(false)} 
+        />
       )}
     </>
   );
 };
 
+// MatchForm Component: Form to add or edit match details
 const MatchForm = ({ match, onSave, onCancel }) => {
   const [formData, setFormData] = useState(
     match || {
@@ -201,6 +221,7 @@ const MatchForm = ({ match, onSave, onCancel }) => {
   const [events, setEvents] = useState([]);
   const [teams, setTeams] = useState([]);
 
+  // Fetch events and teams when the form is loaded
   useEffect(() => {
     const fetchOptions = async () => {
       try {
@@ -217,11 +238,13 @@ const MatchForm = ({ match, onSave, onCancel }) => {
     fetchOptions();
   }, []);
 
+  // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // Submit form data to save the match
   const handleSubmit = (e) => {
     e.preventDefault();
     onSave(formData);
@@ -231,6 +254,7 @@ const MatchForm = ({ match, onSave, onCancel }) => {
     <div className={styles.FormContainer}>
       <h2 className={styles.FormHeader}>{match ? "Edit Match" : "Add New Match"}</h2>
       <form className={styles.Form} onSubmit={handleSubmit}>
+        {/* Event dropdown */}
         <div className={styles.FormGroup}>
           <label className={styles.Label}>Event:</label>
           <select
@@ -249,6 +273,7 @@ const MatchForm = ({ match, onSave, onCancel }) => {
           </select>
         </div>
         <div className={styles.FormGroup}>
+          {/* Team 1 dropdown */}
           <label className={styles.Label}>Team 1:</label>
           <select
             name="team1"
@@ -266,6 +291,7 @@ const MatchForm = ({ match, onSave, onCancel }) => {
           </select>
         </div>
         <div className={styles.FormGroup}>
+          {/* Team 2 dropdown */}
           <label className={styles.Label}>Team 2:</label>
           <select
             name="team2"
@@ -283,6 +309,7 @@ const MatchForm = ({ match, onSave, onCancel }) => {
           </select>
         </div>
         <div className={styles.FormGroup}>
+          {/* Scheduled Time, Status, and Result inputs */}
           <label className={styles.Label}>Scheduled Time:</label>
           <input
             type="datetime-local"
@@ -318,6 +345,7 @@ const MatchForm = ({ match, onSave, onCancel }) => {
           />
         </div>
         <div className={styles.ButtonGroup}>
+          {/* Buttons */}
           <button className={styles.Button} type="submit">
             Save
           </button>

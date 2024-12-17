@@ -4,14 +4,17 @@ import axios from "axios";
 import styles from "../../src/styles/events/EventDetailPage.module.css";
 
 const EventDetailPage = () => {
+    // Extract the event ID from the route parameters
     const { id } = useParams();
     const history = useHistory();
     const [event, setEvent] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    // Fetch the event details when the component mounts or ID changes
     useEffect(() => {
         const fetchEvent = async () => {
             try {
+                // Send GET request to fetch event details by ID
                 const { data } = await axios.get(`/events/${id}`);
                 setEvent(data);
             } catch (err) {
@@ -24,7 +27,9 @@ const EventDetailPage = () => {
         fetchEvent();
     }, [id]);
 
+    // Show a loading message until the data is fetched
     if (loading) return <p>Loading...</p>;
+    // Show an error message if the event was not found
     if (!event) return <p>Event not found.</p>;
 
     return (
@@ -51,6 +56,7 @@ const EventDetailPage = () => {
                         Back to Events
                     </button>
                     <div>
+                        {/* Display start and end dates */}
                         <p className={styles.EventDate}>
                             {event.start_date} - {event.end_date}
                         </p>
