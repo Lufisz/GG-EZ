@@ -23,7 +23,7 @@ import MatchesPage from "./pages/MatchesPage";
 
 function App() {
   const history = useHistory();
-  const setCurrentUser = useSetCurrentUser();
+  const { setCurrentUser } = useSetCurrentUser();
 
   // Fetch current user on initial app load
   useEffect(() => {

@@ -32,7 +32,7 @@ export const CurrentUserProvider = ({ children }) => {
   // Fetch the current user's role from the backend
   const fetchCurrentUserRole = useCallback(async () => {
     try {
-      const { data } = await axios.get("users/current-user-role/");
+      const { data } = await axios.get("current-user-role/");
       setCurrentUser(data);
       localStorage.setItem("currentUser", JSON.stringify(data));
     } catch (err) {
