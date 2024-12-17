@@ -114,7 +114,7 @@ const SignInForm = () => {
       </Form>
       <div className="mt-3">
         <Link className={styles.Link} to="/signup">
-          Don't have an account? <span>Sign up now!</span>
+          Don&apos;t have an account? <span>Sign up now!</span>
         </Link>
       </div>
     </div>
