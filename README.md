@@ -2,7 +2,7 @@
 
 Welcome to the GG-EZ frontend! This is the user interface for the **GG-EZ Esports Event Tracker**, which interacts with the backend API to provide users with detailed esports event, match, and team information.
 
-[View live project here!](https://gg-ez-750b5184ca87.herokuapp.com/signin)
+[View live project here!](https://gg-ez-750b5184ca87.herokuapp.com/)
 
 ---
 
