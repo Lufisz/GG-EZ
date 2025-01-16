@@ -20,7 +20,7 @@ const CustomToast = ({
     <Toast
       onClose={onClose}
       show={show}
-      delay={3000}
+      delay={1500}
       autohide
       style={toastStyle}
       className={toastStyles.toast}

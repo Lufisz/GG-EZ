@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "../../styles/admin/AdminShared.module.css";
+import CustomToast from "../../components/CustomToast";
 
 // TeamsAdmin Component: Manages and displays teams in the admin panel
 const TeamsAdmin = () => {
@@ -13,6 +14,9 @@ const TeamsAdmin = () => {
   const [currentTeam, setCurrentTeam] = useState(null);
   const [nextPage, setNextPage] = useState(null);
   const [previousPage, setPreviousPage] = useState(null);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("success");
 
   // Fetch teams when the component loads
   useEffect(() => {
@@ -50,6 +54,9 @@ const TeamsAdmin = () => {
         setFilteredTeams([]);
       }
     } catch (err) {
+      setToastMessage("Failed to fetch teams.");
+      setToastType("error");
+      setShowToast(true);
       console.error("Error fetching teams:", err.response || err.message);
       setTeams([]);
       setFilteredTeams([]);
@@ -78,7 +85,13 @@ const TeamsAdmin = () => {
         // Update state after deletion
         setTeams(teams.filter((team) => team.id !== teamId));
         setFilteredTeams(filteredTeams.filter((team) => team.id !== teamId));
+        setToastMessage("Team deleted successfully.");
+        setToastType("success");
+        setShowToast(true);
       } catch (err) {
+        setToastMessage("Failed to delete team.");
+        setToastType("error");
+        setShowToast(true);
         console.error("Error deleting team:", err.response || err.message);
       }
     }
@@ -88,44 +101,51 @@ const TeamsAdmin = () => {
   const handleSave = async (team, file) => {
     try {
       let logoUrl = team.logo;
-  
+
       // If a new logo file is uploaded
       if (file) {
         const formData = new FormData();
         formData.append("file", file);
-  
+
         const response = await axios.post(
           "/cloudinary-proxy/",
           formData,
           { headers: { "Content-Type": "multipart/form-data" } }
         );
-  
+
         if (response.data.secure_url) {
           logoUrl = response.data.secure_url; // Use the uploaded logo URL
         } else {
           throw new Error("Failed to retrieve the secure URL from Cloudinary.");
         }
       }
-  
+
       // Prepare team data for saving
       const teamData = {
         name: team.name,
         description: team.description || "",
         logo: logoUrl || null, // Ensure null if no logo provided
       };
-  
+
       console.log("Payload being sent to backend:", teamData);
-  
+
       // Update or add a new team
       if (team.id) {
         await axios.put(`teams/${team.id}/`, teamData);
+        setToastMessage("Team updated successfully.");
       } else {
         await axios.post("teams/", teamData);
+        setToastMessage("Team added successfully.");
       }
-  
+
+      setToastType("success");
+      setShowToast(true);
       fetchTeams(); // Refresh the team list
       setIsEditing(false); // Close the form
     } catch (err) {
+      setToastMessage("Failed to save team.");
+      setToastType("error");
+      setShowToast(true);
       console.error("Error saving team:", err.response?.data || err.message);
     }
   };
@@ -153,6 +173,12 @@ const TeamsAdmin = () => {
 
   return (
     <>
+      <CustomToast
+        show={showToast}
+        onClose={() => setShowToast(false)}
+        message={toastMessage}
+        type={toastType}
+      />
       {/* Render team list or the form for adding/editing */}
       {!isEditing ? (
         <div className={styles.Container}>
@@ -250,11 +276,20 @@ const TeamForm = ({ team, onSave, onCancel }) => {
     team || { name: "", description: "", logo: "" }
   );
   const [file, setFile] = useState(null);
+  const [errors, setErrors] = useState({}); // State for validation errors
 
   // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+
+    // Clear the specific error when the user types
+    if (errors[name]) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: null,
+      }));
+    }
   };
 
   // Handle file input for the logo
@@ -265,6 +300,23 @@ const TeamForm = ({ team, onSave, onCancel }) => {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Validate inputs
+    const newErrors = {};
+    if (!formData.name.trim()) {
+      newErrors.name = "Team name cannot be blank.";
+    }
+    if (formData.description.trim().length < 10) {
+      newErrors.description =
+        "Description must be at least 10 characters long.";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors); // Update error state if validation fails
+      return;
+    }
+
+    // Call onSave if validation passes
     onSave(formData, file);
   };
 
@@ -291,6 +343,7 @@ const TeamForm = ({ team, onSave, onCancel }) => {
             value={formData.description}
             onChange={handleChange}
           />
+          <span className={styles.Error}>{errors.description}</span>
         </div>
         <div className={styles.FormGroup}>
           <label className={styles.Label}>Logo:</label>
