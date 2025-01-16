@@ -6,6 +6,23 @@ Welcome to the GG-EZ frontend! This is the user interface for the **GG-EZ Esport
 
 ---
 
+## **Table of Contents**
+
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Setup Instructions](#setup-instructions)
+- [Testing](#testing)
+- [Deployment](#deployment)
+- [UX Design](#ux-design)
+- [Agile Development](#agile-development)
+- [Code Structure](#code-structure)
+- [Credits](#credits)
+- [Contributing](#contributing)
+- [Security Notes](#security-notes)
+
+---
+
 ## **Note for Testing and Assessment**  
 - Most **CRUD features** are implemented in the **Admin Panel**.  
 - During registration, users can select between:
@@ -136,36 +153,165 @@ Ensure you have the following installed:
 
 ---
 
-## **Deployment**
+## **Frontend Deployment**
 
-### **Steps to Deploy**
+The GG-EZ frontend is deployed on **Heroku**. Below is a step-by-step guide for deploying the project to Heroku using both the CLI and the Heroku website.
 
-1. Build the project:
+---
+
+### **1. Prerequisites**
+
+Before deploying, ensure you have the following:
+
+- A **Heroku account** ([Sign up here](https://signup.heroku.com/)).
+- **Git** installed on your machine.
+- **Heroku CLI** installed ([Download here](https://devcenter.heroku.com/articles/heroku-cli)).
+- **Node.js** and **npm** installed ([Download here](https://nodejs.org/)).
+
+---
+
+### **2. Set Environment Variables**
+
+You will need to configure the following environment variables for deployment:
+
+| Variable Name    | Description                                    | Example Value                                      |
+|-------------------|------------------------------------------------|----------------------------------------------------|
+| `REACT_APP_API_URL`  | The URL of your backend API                      | `https://your-api-url.herokuapp.com/`      |
+
+#### **Example `.env` File for Local Development**
+To run the project locally, create a `.env` file in the root directory and add:
+
+```plaintext
+REACT_APP_API_URL=https://your-api-url.herokuapp.com/
+```
+
+---
+
+### **3. Deployment Steps on Heroku (CLI)**
+
+1. **Log in to Heroku**:
+   ```bash
+   heroku login
+   ```
+
+2. **Create a Heroku App**:
+   ```bash
+   heroku create your-app-name
+   ```
+
+3. **Add Buildpacks**:
+   Ensure Heroku knows how to build the app by setting the Node.js buildpack:
+   ```bash
+   heroku buildpacks:set heroku/nodejs
+   ```
+
+4. **Install Dependencies**:
+   Ensure all dependencies are installed:
+   ```bash
+   npm install
+   ```
+
+5. **Push the Code to Heroku**:
+   Make sure all changes are committed, then push the code to Heroku:
+   ```bash
+   git add .
+   git commit -m "Deploy frontend to Heroku"
+   git push heroku main
+   ```
+
+6. **Set Environment Variables on Heroku**:
+   - Go to the Heroku dashboard.
+   - Select your app and navigate to **Settings > Config Vars**.
+   - Add the environment variables listed above:
+     ```bash
+     heroku config:set REACT_APP_API_URL=https://your-api-url.com/
+     ```
+
+7. **Build the Project**:
+   Build the project for production:
    ```bash
    npm run build
    ```
 
-2. Deploy to Heroku:
+8. **Deploy the App**:
+   Ensure your app is deployed and running:
    ```bash
-   heroku login
-   heroku create
    git push heroku main
    ```
 
-3. Set up environment variables:
-   ```bash
-   heroku config:set REACT_APP_API_URL=https://your-api-url.com/
-   ```
+---
+
+### **4. Deployment via Heroku Website (Optional)**
+
+If you prefer deploying the project through the Heroku website, follow these steps:
+
+1. **Log in to Heroku**:
+   - Visit [Heroku](https://www.heroku.com/) and log in to your account.
+
+2. **Create a New App**:
+   - Navigate to the **Dashboard** and click **New > Create New App**.
+   - Enter a name for your app (e.g., `gg-ez-frontend`) and choose your region.
+
+3. **Connect Your GitHub Repository**:
+   - Go to the **Deploy** tab in your app settings.
+   - Under **Deployment Method**, select **GitHub**.
+   - Search for your repository and connect it.
+
+4. **Enable Automatic Deploys (Optional)**:
+   - Once your repository is connected, you can enable **Automatic Deploys** from the main branch to streamline future updates.
+
+5. **Manually Deploy the App**:
+   - Scroll down to the **Manual Deploy** section and click **Deploy Branch** to deploy your app.
+
+6. **Set Environment Variables**:
+   - Go to the **Settings** tab and click **Reveal Config Vars**.
+   - Add all required variables (e.g., `REACT_APP_API_URL`).
+
+---
+
+### **5. Testing the Deployment**
+
+- Access your app using the Heroku URL:
+  ```
+  https://your-app-name.herokuapp.com
+  ```
+- Verify the following:
+  - The frontend loads correctly and interacts with the backend.
+  - The event, match, and team data are correctly displayed.
+  - The admin panel functions for CRUD operations if applicable.
+  - The UI is responsive and works across different screen sizes.
+
+---
+
+### **Common Pitfalls & Troubleshooting**
+
+- **Heroku Build Failures**: If you encounter build failures, ensure all dependencies are correctly listed in `package.json` and that your `build` script is configured in `package.json`.
+  - Example `scripts` section:
+    ```json
+    "scripts": {
+      "start": "react-scripts start",
+      "build": "react-scripts build",
+      "test": "react-scripts test",
+      "eject": "react-scripts eject"
+    }
+    ```
+
+- **Missing Environment Variables**: Ensure all necessary environment variables (like `REACT_APP_API_URL`) are set correctly. You can check for missing variables with:
+  ```bash
+  heroku config
+  ```
+
+- **Static File Handling**: If you face issues with static file handling (images, etc.), ensure that the `build` directory is properly created and pushed to Heroku. You may also want to configure **whitenoise** for serving static files.
 
 ---
 
 ## **UX Design**
 
 ### **Wireframes**
-- ![Home Page](/media/homepage.png)  
-- ![Event Page](/media/events-page.png)  
-- ![Admin Panel Page](/media/admin-panel-page.png)  
-- ![Manage Players Page](/media/manage-players.png) 
+![Home Page](/media/homepage.png)  
+![Event Page](/media/events-page.png)  
+![Admin Panel Page](/media/admin-panel-page.png)  
+![Manage Players Page](/media/manage-players.png) 
 
 **Design Decisions**:
 - Clean navigation and grid-based design for clarity.  
@@ -229,4 +375,4 @@ We welcome contributions to GG-EZ! Follow these steps:
 
 ## **Security Notes**
 - **API URLs** are managed securely via environment variables (`.env`).  
-- Ensure that `.env` files are excluded from version control using `.gitignore`.  
+- Ensure that `.env` files are excluded from version control using `.gitignore`.
