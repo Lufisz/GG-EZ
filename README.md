@@ -140,16 +140,55 @@ Ensure you have the following installed:
 
 | Test Case                          | Expected Result                              | Actual Result | Status |
 |------------------------------------|---------------------------------------------|---------------|--------|
-| Event List Display                 | Events display correctly on homepage.       | Pass          | ✅      |
-| Match List Display                 | Matches display with filters applied.       | Pass          | ✅      |
-| Event Details Page                 | Event details render accurately.            | Pass          | ✅      |
-| Match Details Page                 | Match teams, status, and time are displayed.| Pass          | ✅      |
-| Search Events and Matches          | Search results are accurate.                | Pass          | ✅      |
-| Filter Events by Date              | Filters events correctly within the range.  | Pass          | ✅      |
-| Filter Matches by Status           | Filters matches by status (e.g., Upcoming). | Pass          | ✅      |
-| Admin Panel CRUD Operations        | Create, Edit, and Delete works flawlessly.  | Pass          | ✅      |
-| Reload After Login                 | User remains logged in after reloading.     | Pass          | ✅      |
-| Mobile Responsiveness              | Layout adjusts correctly on mobile devices. | Pass          | ✅      |
+| **Event List Display**             | Events display correctly on homepage.       | Pass          | ✅      |
+| **Match List Display**             | Matches display with filters applied.       | Pass          | ✅      |
+| **Event Details Page**             | Event details render accurately.            | Pass          | ✅      |
+| **Match Details Page**             | Match teams, status, and time are displayed.| Pass          | ✅      |
+| **Search Events and Matches**      | Search results are accurate.                | Pass          | ✅      |
+| **Filter Events by Date**         | Filters events correctly within the range.  | Pass          | ✅      |
+| **Filter Matches by Status**      | Filters matches by status (e.g., Upcoming). | Pass          | ✅      |
+| **Admin Panel CRUD Operations**    | Create, Edit, and Delete works flawlessly.  | Pass          | ✅      |
+| **Reload After Login**             | User remains logged in after reloading.     | Pass          | ✅      |
+| **Mobile Responsiveness**          | Layout adjusts correctly on mobile devices. | Pass          | ✅      |
+| **Registration Form - Username**   | Username must be between 3-30 characters.   | Pass          | ✅      |
+| **Registration Form - Email**      | Ensure valid email format (e.g., user@example.com). | Pass     | ✅      |
+| **Registration Form - Password**   | Password must meet strength requirements: min 8 characters, 1 uppercase, 1 lowercase, 1 number, 1 special character. | Pass | ✅ |
+| **Registration Form - Password Confirmation** | Password confirmation must match the password. | Pass  | ✅ |
+| **Error Messages - Username**      | Display error if username is less than 3 characters or more than 30. | Pass | ✅ |
+| **Error Messages - Email**         | Display error for invalid email format or empty email. | Pass  | ✅ |
+| **Error Messages - Password**      | Display error for weak password or empty password. | Pass      | ✅ |
+| **Error Messages - Password Confirmation** | Display error if passwords do not match. | Pass | ✅ |
+
+---
+
+### **Test Details for the Registration Form**
+
+- **Username**:
+  - **Validation**: The username must be between 3-30 characters.
+  - **Error Message**: 
+    - "Username must be at least 3 characters long."
+    - "Username cannot exceed 30 characters."
+    - "Username cannot be empty."
+  
+- **Email**:
+  - **Validation**: Ensure a valid email is entered (e.g., user@example.com).
+  - **Error Message**: 
+    - "The email address you entered is not valid."
+    - "Email cannot be empty."
+
+- **Password**:
+  - **Validation**: Ensure the password contains:
+    - At least 8 characters.
+    - At least one uppercase letter.
+    - At least one lowercase letter.
+    - At least one number.
+    - At least one special character.
+  - **Error Message**:
+    - "Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character."
+
+- **Password Confirmation**:
+  - **Validation**: Ensure the password confirmation field matches the password.
+  - **Error Message**: "Passwords do not match."
 
 ---
 
@@ -166,7 +205,7 @@ Before deploying, ensure you have the following:
 - A **Heroku account** ([Sign up here](https://signup.heroku.com/)).
 - **Git** installed on your machine.
 - **Heroku CLI** installed ([Download here](https://devcenter.heroku.com/articles/heroku-cli)).
-- **Node.js** and **npm** installed ([Download here](https://nodejs.org/)).
+- **Node.js** version **14.x** or later and **npm** version **7.x** or later installed ([Download Node.js here](https://nodejs.org/)).
 
 ---
 
@@ -174,11 +213,12 @@ Before deploying, ensure you have the following:
 
 You will need to configure the following environment variables for deployment:
 
-| Variable Name    | Description                                    | Example Value                                      |
-|-------------------|------------------------------------------------|----------------------------------------------------|
-| `REACT_APP_API_URL`  | The URL of your backend API                      | `https://your-api-url.herokuapp.com/`      |
+| Variable Name       | Description                                        | Example Value                                      |
+|---------------------|----------------------------------------------------|----------------------------------------------------|
+| `REACT_APP_API_URL`  | The URL of your backend API                        | `https://your-api-url.herokuapp.com/`              |
 
 #### **Example `.env` File for Local Development**
+
 To run the project locally, create a `.env` file in the root directory and add:
 
 ```plaintext
@@ -300,8 +340,6 @@ If you prefer deploying the project through the Heroku website, follow these ste
   ```bash
   heroku config
   ```
-
-- **Static File Handling**: If you face issues with static file handling (images, etc.), ensure that the `build` directory is properly created and pushed to Heroku. You may also want to configure **whitenoise** for serving static files.
 
 ---
 
