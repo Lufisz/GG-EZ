@@ -16,6 +16,9 @@ import MatchesAdmin from "./components/admin/MatchesAdmin";
 import PlayersAdmin from "./components/admin/PlayersAdmin";
 import EventDetailPage from "./pages/EventDetailPage";
 import MatchDetailPage from "./pages/MatchDetailPage";
+import PrivacyPolicy from "./pages/legal/PrivacyPolicy";
+import TermsOfService from "./pages/legal/TermsOfService";
+import ContactUs from "./pages/legal/ContactUs";
 import { CurrentUserProvider, useSetCurrentUser } from "./contexts/CurrentUserContext";
 import "./api/axiosDefaults";
 import axios from "axios";
@@ -71,6 +74,11 @@ function App() {
             <Route exact path="/admin/events" component={EventsAdmin} />
             <Route exact path="/admin/matches" component={MatchesAdmin} />
             <Route exact path="/admin/players" component={PlayersAdmin} />
+
+            {/* Footer Routes */}
+            <Route path="/privacy-policy" component={PrivacyPolicy} />
+            <Route path="/terms-of-service" component={TermsOfService} />
+            <Route path="/contact-us" component={ContactUs} />
 
             {/* Catch-all for unmatched routes */}
             <Route render={() => <p>Page not found!</p>} />

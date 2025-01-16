@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styles from "../styles/components/Footer.module.css";
 
 // Footer Component: Displays the footer section with links and copyright info
@@ -12,18 +13,15 @@ const Footer = () => {
         </p>
         {/* Footer links section */}
         <div className={styles.Links}>
-          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-          <a href="#" className={styles.FooterLink}>
+          <Link to="/privacy-policy" className={styles.FooterLink}>
             Privacy Policy
-          </a>
-          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-          <a href="#" className={styles.FooterLink}>
+          </Link>
+          <Link to="/terms-of-service" className={styles.FooterLink}>
             Terms of Service
-          </a>
-          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-          <a href="#" className={styles.FooterLink}>
+          </Link>
+          <Link to="/contact-us" className={styles.FooterLink}>
             Contact Us
-          </a>
+          </Link>
         </div>
       </div>
     </footer>

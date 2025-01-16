@@ -1,0 +1,71 @@
+/* Container for Legal Pages (Privacy Policy, Terms of Service, Contact Us) */
+.LegalContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center-align headers and any centered content */
+    margin: 40px auto;
+    max-width: 900px;
+    width: 100%;
+    background-color: #1a1a1a;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    box-sizing: border-box;
+    color: #e0e0e0;
+}
+
+/* Main Title Styling for Legal Pages */
+.LegalTitle {
+    font-size: 32px;
+    font-weight: bold;
+    color: #00ff99;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    text-align: center; /* Center-align main titles */
+}
+
+/* Styling for Section Titles */
+.SectionTitle {
+    font-size: 20px;
+    font-weight: bold;
+    color: #00ccff;
+    margin: 20px 0 10px;
+    text-align: left; /* Left-align section titles */
+    width: 100%;
+}
+
+/* Styling for General Text */
+.Text {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #e0e0e0;
+    margin: 10px 0;
+    text-align: left; /* Left-align general text */
+    width: 100%;
+}
+
+/* Styling for Links in Text */
+.Text a {
+    color: #00ffcc;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+/* Hover Effect for Links */
+.Text a:hover {
+    color: #00ccff;
+}
+
+/* Styling for Lists */
+.List {
+    text-align: left;
+    margin: 15px 0;
+    padding-left: 20px;
+    width: 100%;
+}
+
+.List li {
+    font-size: 16px;
+    color: #e0e0e0;
+    margin-bottom: 10px;
+}
