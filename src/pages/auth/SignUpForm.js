@@ -101,6 +101,7 @@ const SignUpForm = () => {
         show={showToast}
         onClose={() => setShowToast(false)}
         message={`Welcome to GG-EZ,`}
+        usernameColor="#00ff99"
         username={registeredUser}
       />
 

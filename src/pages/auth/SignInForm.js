@@ -69,6 +69,7 @@ const SignInForm = () => {
         show={showToast}
         onClose={() => setShowToast(false)}
         message="You successfully logged in as"
+        usernameColor="#00ff99"
         username={loggedInUser}
       />
 

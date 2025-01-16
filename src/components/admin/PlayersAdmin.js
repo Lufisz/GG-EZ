@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "../../styles/admin/AdminShared.module.css";
+import CustomToast from "../../components/CustomToast";
 
 // PlayersAdmin Component: Manages and displays players in the admin panel
 const PlayersAdmin = () => {
@@ -13,6 +14,9 @@ const PlayersAdmin = () => {
   const [currentPlayer, setCurrentPlayer] = useState(null);
   const [nextPage, setNextPage] = useState(null);
   const [previousPage, setPreviousPage] = useState(null);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("success");
 
   // Fetch players when the component loads
   useEffect(() => {
@@ -52,6 +56,9 @@ const PlayersAdmin = () => {
       }
     } catch (err) {
       console.error("Error fetching players:", err.response || err.message);
+      setToastMessage("Failed to fetch players.");
+      setToastType("error");
+      setShowToast(true);
       setPlayers([]);
       setFilteredPlayers([]);
     } finally {
@@ -79,8 +86,14 @@ const PlayersAdmin = () => {
         // Update state after deletion
         setPlayers(players.filter((player) => player.id !== playerId));
         setFilteredPlayers(filteredPlayers.filter((player) => player.id !== playerId));
+        setToastMessage("Player deleted successfully.");
+        setToastType("success");
+        setShowToast(true);
       } catch (err) {
         console.error("Error deleting player:", err.response || err.message);
+        setToastMessage("Failed to delete player.");
+        setToastType("error");
+        setShowToast(true);
       }
     }
   };
@@ -119,14 +132,22 @@ const PlayersAdmin = () => {
       // Update or add a new player
       if (player.id) {
         await axios.put(`players/${player.id}/`, playerData);
+        setToastMessage("Player updated successfully.");
       } else {
         await axios.post("players/", playerData);
+        setToastMessage("Player added successfully.");
       }
+
+      setToastType("success");
+      setShowToast(true);
 
       fetchPlayers(); // Refresh the player list
       setIsEditing(false); // Close the form
     } catch (err) {
       console.error("Error saving player:", err.response || err.message);
+      setToastMessage("Failed to save player.");
+      setToastType("error");
+      setShowToast(true);
     }
   };
 
@@ -153,6 +174,13 @@ const PlayersAdmin = () => {
 
   return (
     <>
+      <CustomToast
+        show={showToast}
+        onClose={() => setShowToast(false)}
+        message={toastMessage}
+        type={toastType}
+        usernameColor={toastType === "success" ? "#00ff99" : "#ff4d4d"}
+      />
       {/* Display player list or player form */}
       {!isEditing ? (
         <div className={styles.Container}>
