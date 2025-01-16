@@ -371,16 +371,27 @@ This project followed Agile methodology with task tracking on GitHub Projects:
 ## **Code Structure**
 
 ### **Main Components**
+
 - **`App.js`**: Main app structure and routing.
 - **`contexts/CurrentUserContext.js`**: Context for managing user state.
-- **Pages**:
-  - `HomePage.js`: Main landing page.
-  - `EventsPage.js`: Displays event listings.
-  - `MatchesPage.js`: Displays matches with filters.
-  - `EventDetailPage.js`: Event details.
-  - `MatchDetailPage.js`: Match details.
-- **Admin Components**:
-  - `TeamsAdmin`, `MatchesAdmin`, `EventsAdmin`: Manage content for staff users.
+
+### **Reusable Components**
+- **`CustomToast.js`**: A reusable component for displaying toast notifications. This component can be reused across various pages where notifications are needed.
+- **`Footer.js`**: The footer component, which contains links and information to be displayed at the bottom of the app.
+- **`NavBar.js`**: The navigation bar component that provides links to different pages and handles user interaction with the app.
+- **`AdminPanel.js`**: Admin panel where staff users can manage content, including CRUD operations for events, matches, teams, and players.
+
+### **Pages**:
+- **`HomePage.js`**: Main landing page.
+- **`EventsPage.js`**: Displays event listings.
+- **`MatchesPage.js`**: Displays matches with filters.
+- **`EventDetailPage.js`**: Event details.
+- **`MatchDetailPage.js`**: Match details.
+
+### **Admin Components**:
+- **`TeamsAdmin.js`**: Manage team content for staff users.
+- **`MatchesAdmin.js`**: Manage match content for staff users.
+- **`EventsAdmin.js`**: Manage event content for staff users.
 
 ---
 
