@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styles from "../../styles/pages/SignInUpForm.module.css";
 import btnStyles from "../../styles/components/Button.module.css";
+import CustomToast from "../../components/CustomToast";
 import { Form, Button, Alert } from "react-bootstrap";
 import axios from "axios";
 
@@ -17,6 +18,8 @@ const SignUpForm = () => {
   const { username, email, password1, password2, role } = signUpData;
 
   const [errors, setErrors] = useState({});
+  const [showToast, setShowToast] = useState(false);
+  const [registeredUser, setRegisteredUser] = useState("");
   const history = useHistory();
 
   // Handle form input changes
@@ -76,7 +79,15 @@ const SignUpForm = () => {
     try {
       // Send a POST request to the registration endpoint
       await axios.post("/dj-rest-auth/registration/", signUpData);
-      history.push("/signin");
+    
+      // Set the registered username for the success message
+      setRegisteredUser(signUpData.username);
+      setShowToast(true); // Show the toast
+    
+      // Redirect to the sign-in page after a delay
+      setTimeout(() => {
+        history.push("/signin");
+      }, 1500);
     } catch (err) {
       // Set errors returned from the backend
       setErrors(err.response?.data || {});
@@ -85,6 +96,14 @@ const SignUpForm = () => {
 
   return (
     <div className={styles.Container}>
+      {/* Toast notification for successful registration */}
+      <CustomToast
+        show={showToast}
+        onClose={() => setShowToast(false)}
+        message={`Welcome to GG-EZ,`}
+        username={registeredUser}
+      />
+
       {/* Sign-Up Form Header */}
       <h1 className={styles.Header}>Sign Up</h1>
       <Form onSubmit={handleSubmit}>
