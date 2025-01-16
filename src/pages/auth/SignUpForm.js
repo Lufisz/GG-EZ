@@ -27,9 +27,52 @@ const SignUpForm = () => {
     });
   };
 
+  // Frontend validation logic
+  const validateForm = () => {
+    const validationErrors = {};
+
+    // Username validation
+    if (!username || username.length < 3 || username.length > 30) {
+      validationErrors.username = [
+        "Username must be between 3 and 30 characters.",
+      ];
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
+      validationErrors.email = ["Please enter a valid email address."];
+    }
+
+    // Password validation
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!password1 || !passwordRegex.test(password1)) {
+      validationErrors.password1 = [
+        "Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.",
+      ];
+    }
+
+    // Confirm password validation
+    if (password1 !== password2) {
+      validationErrors.password2 = ["Passwords do not match."];
+    }
+
+    return validationErrors;
+  };
+
   // Handle form submission for user registration
   const handleSubmit = async (event) => {
     event.preventDefault();
+    // Validate inputs before sending data to backend
+    const validationErrors = validateForm();
+
+    // If validation errors exist, set them and prevent submission
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
     try {
       // Send a POST request to the registration endpoint
       await axios.post("/dj-rest-auth/registration/", signUpData);
