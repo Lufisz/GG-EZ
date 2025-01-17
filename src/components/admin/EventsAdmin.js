@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "../../styles/admin/AdminShared.module.css";
+import CustomToast from "../../components/CustomToast";
 
 const EventsAdmin = () => {
   // State to store all events, filtered events, and related UI controls
@@ -12,6 +13,11 @@ const EventsAdmin = () => {
   const [currentEvent, setCurrentEvent] = useState(null);
   const [nextPage, setNextPage] = useState(null);
   const [previousPage, setPreviousPage] = useState(null);
+
+  // Toast state
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("success");
 
   // Fetch events when the component mounts
   useEffect(() => {
@@ -48,6 +54,9 @@ const EventsAdmin = () => {
         setFilteredEvents([]);
       }
     } catch (err) {
+      setToastMessage("Failed to fetch events.");
+      setToastType("error");
+      setShowToast(true);
       console.error("Error fetching events:", err.response || err.message);
       setEvents([]);
       setFilteredEvents([]);
@@ -75,7 +84,13 @@ const EventsAdmin = () => {
         await axios.delete(`events/${eventId}`);
         setEvents(events.filter((event) => event.id !== eventId));
         setFilteredEvents(filteredEvents.filter((event) => event.id !== eventId));
+        setToastMessage("Event deleted successfully.");
+        setToastType("success");
+        setShowToast(true);
       } catch (err) {
+        setToastMessage("Failed to delete event.");
+        setToastType("error");
+        setShowToast(true);
         console.error("Error deleting event:", err.response || err.message);
       }
     }
@@ -118,13 +133,21 @@ const EventsAdmin = () => {
       // Determine whether to create or update the event
       if (event.id) {
         await axios.put(`events/${event.id}`, eventData); // Use PUT for updates
+        setToastMessage("Event updated successfully.");
       } else {
         await axios.post("events/", eventData); // Use POST for new events
+        setToastMessage("Event added successfully.");
       }
   
+
+      setToastType("success");
+      setShowToast(true);
       fetchEvents(); // Refresh events list
       setIsEditing(false); // Exit editing mode
     } catch (err) {
+      setToastMessage("Failed to save event.");
+      setToastType("error");
+      setShowToast(true);
       console.error("Error saving event:", err.response?.data || err.message);
     }
   };
@@ -146,6 +169,12 @@ const EventsAdmin = () => {
 
   return (
     <>
+      <CustomToast
+        show={showToast}
+        onClose={() => setShowToast(false)}
+        message={toastMessage}
+        type={toastType}
+      />
       {!isEditing ? (
         <div className={styles.Container}>
           <h1 className={styles.Header}>Manage Events</h1>
