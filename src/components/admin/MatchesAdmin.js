@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "../../styles/admin/AdminShared.module.css";
+import CustomToast from "../../components/CustomToast";
 
 // MatchesAdmin Component: Manages and displays matches in the admin panel
 const MatchesAdmin = () => {
@@ -12,6 +13,11 @@ const MatchesAdmin = () => {
   const [currentMatch, setCurrentMatch] = useState(null);
   const [nextPage, setNextPage] = useState(null);
   const [previousPage, setPreviousPage] = useState(null);
+
+  // Toast state
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("success");
 
   // Fetch matches when the component mounts
   useEffect(() => {
@@ -51,6 +57,9 @@ const MatchesAdmin = () => {
         setFilteredMatches([]);
       }
     } catch (err) {
+      setToastMessage("Failed to fetch matches.");
+      setToastType("error");
+      setShowToast(true);
       console.error("Error fetching matches:", err.response || err.message);
       setMatches([]);
       setFilteredMatches([]);
@@ -78,7 +87,13 @@ const MatchesAdmin = () => {
         await axios.delete(`matches/${matchId}`);
         setMatches(matches.filter((match) => match.id !== matchId));
         setFilteredMatches(filteredMatches.filter((match) => match.id !== matchId));
+        setToastMessage("Match deleted successfully.");
+        setToastType("success");
+        setShowToast(true);
       } catch (err) {
+        setToastMessage("Failed to delete match.");
+        setToastType("error");
+        setShowToast(true);
         console.error("Error deleting match:", err.response || err.message);
       }
     }
@@ -89,12 +104,19 @@ const MatchesAdmin = () => {
     try {
       if (match.id) {
         await axios.put(`matches/${match.id}/`, match);
+        setToastMessage("Match updated successfully.");
       } else {
         await axios.post("matches/", match);
+        setToastMessage("Match added successfully.");
       }
+      setToastType("success");
+      setShowToast(true);
       fetchMatches();
       setIsEditing(false);
     } catch (err) {
+      setToastMessage("Failed to save match.");
+      setToastType("error");
+      setShowToast(true);
       console.error("Error saving match:", err.response || err.message);
     }
   };
@@ -116,6 +138,12 @@ const MatchesAdmin = () => {
 
   return (
     <>
+      <CustomToast
+        show={showToast}
+        onClose={() => setShowToast(false)}
+        message={toastMessage}
+        type={toastType}
+      />
       {/* Display the matches table or the edit form */}
       {!isEditing ? (
         <div className={styles.Container}>
