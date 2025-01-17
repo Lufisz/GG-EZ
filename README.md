@@ -85,6 +85,14 @@ GG-EZ is a responsive, interactive platform for tracking esports events, teams, 
 
 ---
 
+## Known Issues
+1. **Image Upload Bug**: 
+   - **Description**: When editing an existing team, player, or event without providing a new image, the image is incorrectly set to `https://res.cloudinary/` instead of retaining the current image.
+   - **Status**: Known issue. Workaround: Ensure to re-upload the image when editing.
+   - **Planned Fix**: Update logic to prevent resetting the current image when no new image is uploaded.
+
+---
+
 ## **Technologies Used**
 
 ### **Core Tools**
@@ -189,6 +197,58 @@ Ensure you have the following installed:
 - **Password Confirmation**:
   - **Validation**: Ensure the password confirmation field matches the password.
   - **Error Message**: "Passwords do not match."
+
+---
+
+## **Dependencies**
+
+This project uses the following Node.js dependencies listed in `package.json`. To ensure smooth functioning, make sure these dependencies are installed:
+
+### **Core Dependencies**
+These are essential for the main application:
+- **React** (`react`): A JavaScript library for building user interfaces.
+- **React DOM** (`react-dom`): Entry point of the DOM rendering for React.
+- **React Scripts** (`react-scripts`): Configuration and scripts for Create React App.
+- **React Router DOM** (`react-router-dom`): Declarative routing for React applications.
+- **React Bootstrap** (`react-bootstrap`): Bootstrap components for React.
+- **Bootstrap**: For styling and layout.
+
+### **State Management & API**
+- **Axios**: HTTP client for making API requests.
+- **JWT Decode**: Library to decode JSON Web Tokens (JWT).
+
+### **Testing**
+- **@testing-library/react**, **@testing-library/jest-dom**, **@testing-library/user-event**: Tools for testing React components.
+
+### **Build Tools**
+- **Webpack**: Module bundler.
+- **Babel Core**: Compiler for next-gen JavaScript.
+- **Terser Webpack Plugin**: Minifies JavaScript for production.
+- **Mini CSS Extract Plugin**: Extracts CSS into separate files for production.
+
+### **Styling**
+- **CSS Loader**, **Style Loader**: For processing CSS files.
+- **SASS Loader**: Enables the use of SASS/SCSS for styling.
+- **PostCSS Loader**, **PostCSS Preset Env**: For handling modern CSS features.
+
+### **Development Utilities**
+- **ESLint**: Linter for identifying problematic patterns in JavaScript code.
+- **Babel ESLint**: Linter parser for Babel syntax.
+- **MSW (Mock Service Worker)**: Mocking library for API testing during development.
+
+### **File Handling**
+- **File Loader**, **URL Loader**: For importing files such as images into the project.
+
+### **Environment Configuration**
+- **dotenv**, **dotenv-expand**: For loading environment variables from `.env` files.
+
+---
+
+### **Installation**
+Install all dependencies using npm:
+```bash
+npm install
+```
 
 ---
 
@@ -401,13 +461,14 @@ This project followed Agile methodology with task tracking on GitHub Projects:
 
 ## **Credits**
 
-- **React** for UI development.  
-- **Bootstrap** for responsive design.  
-- **Heroku** for hosting.  
-- **Cloudinary** for image management.  
-- **Font Awesome** for icons.
+- **Code Institute**: For providing a comprehensive walkthrough project that helped significantly in building and structuring this application.
+- **React**: Used for building the interactive user interface. Its component-based architecture allowed for efficient development and scaling.  
+- **Bootstrap**: Provided responsive design elements, ensuring the app is user-friendly across various devices.  
+- **Heroku**: Deployed the application seamlessly, enabling cloud-based hosting and easy scalability.  
+- **Cloudinary**: Managed media storage and delivery, ensuring fast and optimized image handling.  
+- **Font Awesome**: Supplied scalable vector icons for enhancing the app's visual appeal.  
 
----
+--- 
 
 ## **Contributing**
 
