@@ -192,9 +192,13 @@ Ensure you have the following installed:
 
 ---
 
-## **Frontend Deployment**
+## **Deployment**
 
-The GG-EZ frontend is deployed on **Heroku**. Below is a step-by-step guide for deploying the project to Heroku using both the CLI and the Heroku website.
+The **GG-EZ** project consists of two parts:
+- **Frontend (this repository)**: Deployed on Heroku as described below.
+- **Backend**: To make the project fully functional, you will also need to set up the backend. Follow the deployment instructions for the backend [here](https://github.com/Dimmanzo/GG-EZ-API?tab=readme-ov-file#deployment).
+
+Below is a step-by-step guide for deploying the backend to Heroku using both the CLI and the Heroku website.
 
 ---
 
