@@ -275,10 +275,19 @@ const EventForm = ({ event, onSave, onCancel }) => {
     event || { name: "", description: "", start_date: "", end_date: "", image: "" }
   );
   const [file, setFile] = useState(null);
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  
+    // Clear specific error when the user types
+    if (errors[name]) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: null,
+      }));
+    }
   };
 
   const handleFileChange = (e) => {
@@ -287,7 +296,35 @@ const EventForm = ({ event, onSave, onCancel }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Convert empty image string to null before sending
+
+    // Frontend validation
+    const newErrors = {};
+    if (!formData.name.trim()) {
+      newErrors.name = "Event name cannot be blank.";
+    } else if (formData.name.length < 3) {
+      newErrors.name = "Event name must be at least 3 characters long.";
+    }
+
+    if (!formData.description.trim()) {
+      newErrors.description = "Event description cannot be blank.";
+    }
+
+    if (!formData.start_date) {
+      newErrors.start_date = "Start date is required.";
+    }
+
+    if (!formData.end_date) {
+      newErrors.end_date = "End date is required.";
+    } else if (formData.start_date && formData.end_date < formData.start_date) {
+      newErrors.end_date = "End date must be after the start date.";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    // If no errors, pass data to the save function
     const formDataWithImage = { ...formData, image: formData.image || null };
     onSave(formDataWithImage, file);
   };
@@ -306,6 +343,7 @@ const EventForm = ({ event, onSave, onCancel }) => {
             onChange={handleChange}
             required
           />
+          {errors.name && <p className={styles.Error}>{errors.name}</p>}
         </div>
         <div className={styles.FormGroup}>
           <label className={styles.Label}>Description:</label>
@@ -315,6 +353,7 @@ const EventForm = ({ event, onSave, onCancel }) => {
             value={formData.description}
             onChange={handleChange}
           />
+          {errors.description && <p className={styles.Error}>{errors.description}</p>}
         </div>
         <div className={styles.FormGroup}>
           <label className={styles.Label}>Start Date:</label>
@@ -326,6 +365,7 @@ const EventForm = ({ event, onSave, onCancel }) => {
             onChange={handleChange}
             required
           />
+          {errors.start_date && <p className={styles.Error}>{errors.start_date}</p>}
         </div>
         <div className={styles.FormGroup}>
           <label className={styles.Label}>End Date:</label>
@@ -337,6 +377,7 @@ const EventForm = ({ event, onSave, onCancel }) => {
             onChange={handleChange}
             required
           />
+          {errors.end_date && <p className={styles.Error}>{errors.end_date}</p>}
         </div>
         <div className={styles.FormGroup}>
           <label className={styles.Label}>Image:</label>
