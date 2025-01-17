@@ -231,6 +231,19 @@ body, html {
     outline: none;
 }
 
+/* Error message styling */
+.Error {
+    color: #ff4d4d;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Input field with error */
+.ErrorInput {
+    border: 2px solid #ff4d4d;
+}
+
+
 /* Responsive Styles */
 @media screen and (max-width: 768px) {
     .Container {

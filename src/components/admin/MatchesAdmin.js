@@ -248,6 +248,7 @@ const MatchForm = ({ match, onSave, onCancel }) => {
   );
   const [events, setEvents] = useState([]);
   const [teams, setTeams] = useState([]);
+  const [errors, setErrors] = useState({});
 
   // Fetch events and teams when the form is loaded
   useEffect(() => {
@@ -270,11 +271,48 @@ const MatchForm = ({ match, onSave, onCancel }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-  };
+
+    // Clear the specific error when the user types
+    if (errors[name]) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: null,
+      }));
+    }
+};
 
   // Submit form data to save the match
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    // Validate inputs
+    const newErrors = {};
+
+    if (!formData.event) {
+      newErrors.event = "Event is required.";
+    }
+
+    if (!formData.team1) {
+      newErrors.team1 = "Team 1 is required.";
+    }
+
+    if (!formData.team2) {
+      newErrors.team2 = "Team 2 is required.";
+    } else if (formData.team1 && formData.team1 === formData.team2) {
+      newErrors.team2 = "Team 1 and Team 2 must be different.";
+    }
+
+    if (!formData.scheduled_time) {
+      newErrors.scheduled_time = "Scheduled time is required.";
+    } else if (new Date(formData.scheduled_time) < new Date()) {
+      newErrors.scheduled_time = "Scheduled time cannot be in the past.";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
     onSave(formData);
   };
 
@@ -287,7 +325,7 @@ const MatchForm = ({ match, onSave, onCancel }) => {
           <label className={styles.Label}>Event:</label>
           <select
             name="event"
-            className={styles.Input}
+            className={`${styles.Input} ${errors.event ? styles.ErrorInput : ""}`}
             value={formData.event}
             onChange={handleChange}
             required
@@ -299,13 +337,14 @@ const MatchForm = ({ match, onSave, onCancel }) => {
               </option>
             ))}
           </select>
+          {errors.event && <div className={styles.Error}>{errors.event}</div>}
         </div>
         <div className={styles.FormGroup}>
           {/* Team 1 dropdown */}
           <label className={styles.Label}>Team 1:</label>
           <select
             name="team1"
-            className={styles.Input}
+            className={`${styles.Input} ${errors.team1 ? styles.ErrorInput : ""}`}
             value={formData.team1}
             onChange={handleChange}
             required
@@ -317,13 +356,14 @@ const MatchForm = ({ match, onSave, onCancel }) => {
               </option>
             ))}
           </select>
+          {errors.team1 && <div className={styles.Error}>{errors.team1}</div>}
         </div>
         <div className={styles.FormGroup}>
           {/* Team 2 dropdown */}
           <label className={styles.Label}>Team 2:</label>
           <select
             name="team2"
-            className={styles.Input}
+            className={`${styles.Input} ${errors.team2 ? styles.ErrorInput : ""}`}
             value={formData.team2}
             onChange={handleChange}
             required
@@ -335,6 +375,7 @@ const MatchForm = ({ match, onSave, onCancel }) => {
               </option>
             ))}
           </select>
+          {errors.team2 && <div className={styles.Error}>{errors.team2}</div>}
         </div>
         <div className={styles.FormGroup}>
           {/* Scheduled Time, Status, and Result inputs */}
@@ -342,11 +383,12 @@ const MatchForm = ({ match, onSave, onCancel }) => {
           <input
             type="datetime-local"
             name="scheduled_time"
-            className={styles.Input}
+            className={`${styles.Input} ${errors.scheduled_time ? styles.ErrorInput : ""}`}
             value={formData.scheduled_time}
             onChange={handleChange}
             required
           />
+          {errors.scheduled_time && <div className={styles.Error}>{errors.scheduled_time}</div>}
         </div>
         <div className={styles.FormGroup}>
           <label className={styles.Label}>Status:</label>
