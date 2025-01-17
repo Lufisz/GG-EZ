@@ -38,6 +38,12 @@ GG-EZ is a responsive, interactive platform for tracking esports events, teams, 
 
 ---
 
+## **Goals of the Project**
+
+The main goal of GG-EZ is to provide esports enthusiasts with an accessible, user-friendly platform to explore and stay updated on events, matches, teams, and players. This project also aims to offer administrators an efficient way to manage data through a responsive and modern interface. By combining a robust backend API and an interactive frontend, GG-EZ ensures a seamless experience for users and staff alike.
+
+---
+
 ## **Features**
 
 ### **Implemented Features**
@@ -408,6 +414,68 @@ If you prefer deploying the project through the Heroku website, follow these ste
 ---
 
 ## **UX Design**
+
+### **Design Specifications**
+
+The GG-EZ platform's design focuses on creating a modern, user-friendly experience that is visually appealing and consistent across all pages. Below are the key aspects of the design:
+
+#### **Color Scheme**
+The platform features a clean and vibrant color palette:
+- **Primary Colors**:
+  - **Highlight Green**: `#00ff99` - Used for primary actions, buttons, and key focus states.
+  - **Accent Blue**: `#00ccff` - Used for links and secondary focus elements.
+  - **Warning Yellow**: `#ffcc00` - Used for alerts and attention-grabbing notifications.
+- **Background Colors**:
+  - **Dark Gray**: `#121212` and `#1a1a1a` - Used for main backgrounds to create contrast and maintain readability.
+  - **Lighter Gray**: `#333` - Used for dividers, borders, and secondary elements.
+- **Text Colors**:
+  - **Light Gray**: `#e0e0e0` - Used for body text, ensuring readability on dark backgrounds.
+  - **White**: `#ffffff` - Used for headings and primary text in high-contrast areas.
+
+#### **Typography**
+- **Font Family**:
+  - The primary font is `Arial`, sans-serif, chosen for its clarity and compatibility across browsers.
+- **Font Styles**:
+  - **Headings** (`h1`, `h2`, `h3`): Bold and prominently styled with the highlight green (`#00ff99`) or blue (`#00ccff`).
+  - **Body Text**: Regular weight with a subtle light gray (`#e0e0e0`).
+  - **Emphasis**: Italics and bold styles are used sparingly for emphasis and accessibility.
+
+#### **Buttons and Interactive Elements**
+- **Default Button**:
+  - **Background Color**: `#00ff99`.
+  - **Text Color**: `#121212`.
+  - **Hover State**: Smooth transition to a darker green (`#00cc77`) to indicate interactivity.
+- **Secondary Button**:
+  - **Background Color**: Transparent with a border in `#00ff99`.
+  - **Hover State**: Fills with the highlight green.
+
+#### **Input Fields**
+- **Default Inputs**:
+  - **Background**: `#1a1a1a`.
+  - **Border**: Subtle border in `#333`.
+  - **Focus State**: Glows with `#00ff99` for user guidance.
+- **Validation States**:
+  - **Success**: Highlighted border in green (`#00ff99`).
+  - **Error**: Highlighted border in red (`#ff0000`), with accompanying error messages styled in red.
+
+#### **Page Layouts and Components**
+- **Navbar**:
+  - Sticky at the top for easy navigation.
+  - Uses the highlight green for active links and hover states.
+- **Footer**:
+  - Background in dark gray (`#121212`) with subtle text in light gray.
+  - Includes social links styled with Font Awesome icons.
+- **Cards**:
+  - Used for events, matches, and team displays.
+  - Feature a hover effect with subtle scaling and shadow transitions for interactivity.
+
+#### **Responsive Design**
+The platform is fully responsive and optimized for mobile, tablet, and desktop devices:
+- Mobile: Single-column layouts with collapsible menus.
+- Tablet: Two-column layouts for better utilization of space.
+- Desktop: Multi-column layouts with enhanced spacing and padding for readability.
+
+This design approach ensures consistency, accessibility, and a professional aesthetic throughout the application.
 
 ### **Wireframes**
 ![Home Page](/media/homepage.png)  
