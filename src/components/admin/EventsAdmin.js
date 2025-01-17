@@ -338,10 +338,9 @@ const EventForm = ({ event, onSave, onCancel }) => {
           <input
             type="text"
             name="name"
-            className={styles.Input}
+            className={`${styles.Input} ${errors.name ? styles.ErrorInput : ""}`}
             value={formData.name}
             onChange={handleChange}
-            required
           />
           {errors.name && <p className={styles.Error}>{errors.name}</p>}
         </div>
@@ -349,7 +348,7 @@ const EventForm = ({ event, onSave, onCancel }) => {
           <label className={styles.Label}>Description:</label>
           <textarea
             name="description"
-            className={styles.Input}
+            className={`${styles.Input} ${errors.description ? styles.ErrorInput : ""}`}
             value={formData.description}
             onChange={handleChange}
           />
@@ -360,10 +359,9 @@ const EventForm = ({ event, onSave, onCancel }) => {
           <input
             type="date"
             name="start_date"
-            className={styles.Input}
+            className={`${styles.Input} ${errors.start_date ? styles.ErrorInput : ""}`}
             value={formData.start_date}
             onChange={handleChange}
-            required
           />
           {errors.start_date && <p className={styles.Error}>{errors.start_date}</p>}
         </div>
@@ -372,10 +370,9 @@ const EventForm = ({ event, onSave, onCancel }) => {
           <input
             type="date"
             name="end_date"
-            className={styles.Input}
+            className={`${styles.Input} ${errors.end_date ? styles.ErrorInput : ""}`}
             value={formData.end_date}
             onChange={handleChange}
-            required
           />
           {errors.end_date && <p className={styles.Error}>{errors.end_date}</p>}
         </div>

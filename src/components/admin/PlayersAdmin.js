@@ -276,6 +276,7 @@ const PlayerForm = ({ player, onSave, onCancel }) => {
   );
   const [file, setFile] = useState(null);
   const [teams, setTeams] = useState([]);
+  const [errors, setErrors] = useState({});
 
   // Fetch available teams when the form loads
   useEffect(() => {
@@ -295,6 +296,11 @@ const PlayerForm = ({ player, onSave, onCancel }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    
+    // Clear specific error when the user types
+    if (errors[name]) {
+      setErrors((prevErrors) => ({ ...prevErrors, [name]: null }));
+    }
   };
 
   // Handle file input for the avatar
@@ -305,6 +311,27 @@ const PlayerForm = ({ player, onSave, onCancel }) => {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Validation logic
+    const newErrors = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required.";
+    }
+
+    if (!formData.role.trim()) {
+      newErrors.role = "Role is required.";
+    }
+
+    if (file && !file.type.startsWith("image/")) {
+      newErrors.avatar = "Avatar must be an image file.";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
     onSave(formData, file);
   };
 
@@ -317,31 +344,32 @@ const PlayerForm = ({ player, onSave, onCancel }) => {
           <input
             type="text"
             name="name"
-            className={styles.Input}
+            className={`${styles.Input} ${errors.name ? styles.ErrorInput : ""}`}
             value={formData.name}
             onChange={handleChange}
-            required
           />
+          {errors.name && <p className={styles.Error}>{errors.name}</p>}
         </div>
         <div className={styles.FormGroup}>
           <label className={styles.Label}>Role:</label>
           <input
             type="text"
             name="role"
-            className={styles.Input}
+            className={`${styles.Input} ${errors.role ? styles.ErrorInput : ""}`}
             value={formData.role}
             onChange={handleChange}
-            required
           />
+          {errors.role && <p className={styles.Error}>{errors.role}</p>}
         </div>
         <div className={styles.FormGroup}>
           <label className={styles.Label}>Avatar:</label>
           <input
             type="file"
             accept="image/*"
-            className={styles.Input}
+            className={`${styles.Input} ${errors.avatar ? styles.ErrorInput : ""}`}
             onChange={handleFileChange}
           />
+          {errors.avatar && <p className={styles.Error}>{errors.avatar}</p>}
           {formData.avatar && (
             <a
               href={formData.avatar}

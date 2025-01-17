@@ -328,7 +328,6 @@ const MatchForm = ({ match, onSave, onCancel }) => {
             className={`${styles.Input} ${errors.event ? styles.ErrorInput : ""}`}
             value={formData.event}
             onChange={handleChange}
-            required
           >
             <option value="">Select an Event</option>
             {events.map((event) => (
@@ -347,7 +346,6 @@ const MatchForm = ({ match, onSave, onCancel }) => {
             className={`${styles.Input} ${errors.team1 ? styles.ErrorInput : ""}`}
             value={formData.team1}
             onChange={handleChange}
-            required
           >
             <option value="">Select Team 1</option>
             {teams.map((team) => (
@@ -366,7 +364,6 @@ const MatchForm = ({ match, onSave, onCancel }) => {
             className={`${styles.Input} ${errors.team2 ? styles.ErrorInput : ""}`}
             value={formData.team2}
             onChange={handleChange}
-            required
           >
             <option value="">Select Team 2</option>
             {teams.map((team) => (
@@ -386,7 +383,6 @@ const MatchForm = ({ match, onSave, onCancel }) => {
             className={`${styles.Input} ${errors.scheduled_time ? styles.ErrorInput : ""}`}
             value={formData.scheduled_time}
             onChange={handleChange}
-            required
           />
           {errors.scheduled_time && <div className={styles.Error}>{errors.scheduled_time}</div>}
         </div>

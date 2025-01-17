@@ -329,21 +329,21 @@ const TeamForm = ({ team, onSave, onCancel }) => {
           <input
             type="text"
             name="name"
-            className={styles.Input}
+            className={`${styles.Input} ${errors.name ? styles.ErrorInput : ""}`}
             value={formData.name}
             onChange={handleChange}
-            required
           />
+          {errors.name && <p className={styles.Error}>{errors.name}</p>}
         </div>
         <div className={styles.FormGroup}>
           <label className={styles.Label}>Description:</label>
           <textarea
             name="description"
-            className={styles.Input}
+            className={`${styles.Input} ${errors.description ? styles.ErrorInput : ""}`}
             value={formData.description}
             onChange={handleChange}
           />
-          <span className={styles.Error}>{errors.description}</span>
+          {errors.description && <p className={styles.Error}>{errors.description}</p>}
         </div>
         <div className={styles.FormGroup}>
           <label className={styles.Label}>Logo:</label>
