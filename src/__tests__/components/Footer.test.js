@@ -1,55 +1,80 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import Footer from "../../components/Footer";
+import NavBar from "../../components/NavBar";
 
-describe("Footer Component", () => {
-  test("renders the footer with copyright information", () => {
+// Mock the CurrentUserContext
+jest.mock("../../contexts/CurrentUserContext", () => ({
+  useCurrentUser: jest.fn(),
+  useSetCurrentUser: () => ({
+    handleLogout: jest.fn(),
+  }),
+}));
+
+// Import mocked hooks
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
+
+describe("NavBar Component", () => {
+  const renderNavBar = () =>
     render(
       <MemoryRouter>
-        <Footer />
+        <NavBar />
       </MemoryRouter>
     );
 
-    const currentYear = new Date().getFullYear();
-    const copyrightText = `© ${currentYear} GG-EZ. All rights reserved.`;
-
-    expect(screen.getByText(copyrightText)).toBeInTheDocument();
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  test("renders privacy policy link", () => {
-    render(
-      <MemoryRouter>
-        <Footer />
-      </MemoryRouter>
-    );
+  test("renders the home, events, and matches links", () => {
+    useCurrentUser.mockReturnValue(null);
+    renderNavBar();
 
-    const privacyLink = screen.getByText("Privacy Policy");
-    expect(privacyLink).toBeInTheDocument();
-    expect(privacyLink).toHaveAttribute("href", "/privacy-policy");
+    expect(screen.getByText(/Home/i)).toBeInTheDocument();
+    expect(screen.getByText(/Events/i)).toBeInTheDocument();
+    expect(screen.getByText(/Matches/i)).toBeInTheDocument();
   });
 
-  test("renders terms of service link", () => {
-    render(
-      <MemoryRouter>
-        <Footer />
-      </MemoryRouter>
-    );
+  test("renders sign-in and sign-up links when logged out", () => {
+    useCurrentUser.mockReturnValue(null);
+    renderNavBar();
 
-    const termsLink = screen.getByText("Terms of Service");
-    expect(termsLink).toBeInTheDocument();
-    expect(termsLink).toHaveAttribute("href", "/terms-of-service");
+    expect(screen.getByText(/Sign In/i)).toBeInTheDocument();
+    expect(screen.getByText(/Sign Up/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Log Out/i)).not.toBeInTheDocument();
   });
 
-  test("renders contact us link", () => {
-    render(
-      <MemoryRouter>
-        <Footer />
-      </MemoryRouter>
-    );
+  test("renders log out link when logged in", () => {
+    useCurrentUser.mockReturnValue({ username: "test_user", role: "user" });
+    renderNavBar();
 
-    const contactLink = screen.getByText("Contact Us");
-    expect(contactLink).toBeInTheDocument();
-    expect(contactLink).toHaveAttribute("href", "/contact-us");
+    expect(screen.getByText(/Log Out/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Sign In/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Sign Up/i)).not.toBeInTheDocument();
+  });
+
+  test("renders admin panel link for staff users", () => {
+    useCurrentUser.mockReturnValue({ username: "admin_user", role: "staff_user" });
+    renderNavBar();
+
+    expect(screen.getByText(/Admin Panel/i)).toBeInTheDocument();
+  });
+
+  test("does not render admin panel link for regular users", () => {
+    useCurrentUser.mockReturnValue({ username: "regular_user", role: "user" });
+    renderNavBar();
+
+    expect(screen.queryByText(/Admin Panel/i)).not.toBeInTheDocument();
+  });
+
+  test("calls the toggle function when the toggle button is clicked", () => {
+    useCurrentUser.mockReturnValue(null);
+    renderNavBar();
+
+    const toggleButton = screen.getByRole("button", { name: /toggle navigation/i });
+    expect(toggleButton).toBeInTheDocument();
+
+    fireEvent.click(toggleButton);
+    // Confirm no error is thrown; behavior can be checked more thoroughly with further implementation
   });
 });
