@@ -1,6 +1,6 @@
 # **GG-EZ - Esports Event Tracker (Frontend)**
 
-Welcome to the GG-EZ frontend! This is the user interface for the **GG-EZ Esports Event Tracker**, which interacts with the backend API to provide users with detailed esports event, match, and team information.
+Welcome to the GG-EZ frontend! This is the user interface for the **GG-EZ Esports Event Tracker**, which interacts with the [backend API](https://github.com/Dimmanzo/GG-EZ-API) to provide users with detailed esports event, match, and team information.
 
 [View live project here!](https://gg-ez-750b5184ca87.herokuapp.com/)
 
@@ -172,6 +172,47 @@ Ensure you have the following installed:
 | **Error Messages - Email**         | Display error for invalid email format or empty email. | Pass  | ✅ |
 | **Error Messages - Password**      | Display error for weak password or empty password. | Pass      | ✅ |
 | **Error Messages - Password Confirmation** | Display error if passwords do not match. | Pass | ✅ |
+
+---
+
+### **Automated Testing**
+
+To ensure the reliability and robustness of the application, a comprehensive suite of automated tests was implemented. These tests cover both functional and integration scenarios, focusing on critical components and user flows. Below is a summary of the automated tests that were added:
+
+#### **Frontend Component Tests**
+- **MatchesPage and MatchesDetailPage**: Verified that matches display correctly, including loading states, error handling, and ensuring data fetched from the backend renders as expected.
+- **EventsPage and EventsDetailPage**: Checked for accurate data fetching and rendering of event details under various scenarios, including edge cases.
+- **SignUpForm and SignInForm**: Validated input fields, error messages for invalid data, and the successful flow for user login and registration.
+- **CustomToast Component**: Ensured proper rendering of toast notifications, verifying styles, dynamic behavior, and onClose functionality.
+- **Navbar and Footer Components**: Confirmed correct rendering, links, copyright information, and responsiveness.
+
+#### **Admin Panel Tests**
+- **PlayersAdmin and TeamsAdmin**: Focused on CRUD operations (Create, Read, Update, Delete) and verified functionality such as pagination, filtering, and API mocking to simulate real-world backend behavior.
+- **EventsAdmin**: Tested the management of events, including advanced filtering, pagination, and error handling scenarios.
+
+#### **Custom Hooks**
+- **useClickOutsideToggle Hook**: Ensured proper behavior for toggling elements based on outside clicks, improving accessibility and user experience.
+
+#### **Global Utilities**
+- **Axios Defaults**: Verified configurations such as `baseURL` and headers to ensure secure and seamless communication with the backend API.
+
+---
+
+### **How to Run Automated Tests**
+1. **Install dependencies**: Ensure all necessary dependencies are installed using:
+   ```bash
+   npm install
+   ```
+2. **Run the test suite**: Execute all tests with:
+   ```bash
+   npm test
+   ```
+
+This command will initiate the testing framework and provide detailed feedback for both passed and failed test cases.
+
+---
+
+By combining both manual and automated testing, the application ensures a smooth user experience and adheres to high-quality standards.
 
 ---
 
