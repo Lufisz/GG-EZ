@@ -1,11 +1,16 @@
 # **GG-EZ - Esports Event Tracker (Frontend)**
 
-Welcome to the GG-EZ frontend! This is the user interface for the **GG-EZ Esports Event Tracker**, which interacts with the [backend API](https://github.com/Dimmanzo/GG-EZ-API) to provide users with detailed esports event, match, and team information.
-
 [View live project here!](https://gg-ez-750b5184ca87.herokuapp.com/)
 
 ---
 
+## **Project Rationale**
+
+GG-EZ is all about making it easier and more enjoyable to keep up with esports tournaments, matches, teams, and players. This project is the **frontend** of the [GG-EZ platform](https://github.com/Dimmanzo/GG-EZ), creating a smooth, interactive, and user-friendly experience for everyone who loves esports.
+
+The frontend was built with **React**, a powerful tool that helps create a fast and responsive interface. Whether you're on your phone, tablet, or computer, GG-EZ is designed to look great and work seamlessly. By connecting to the [backend API](https://github.com/Dimmanzo/GG-EZ-API), it ensures users can explore esports events and details effortlessly, while keeping the design simple and easy to navigate.
+
+---
 ## **Table of Contents**
 
 - [Project Overview](#project-overview)
