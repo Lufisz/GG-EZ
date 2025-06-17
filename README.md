@@ -6,9 +6,9 @@
 
 ## **Project Rationale**
 
-GG-EZ is all about making it easier and more enjoyable to keep up with esports tournaments, matches, teams, and players. This project is the **frontend** of the [GG-EZ platform](https://github.com/Dimmanzo/GG-EZ), creating a smooth, interactive, and user-friendly experience for everyone who loves esports.
+GG-EZ is all about making it easier and more enjoyable to keep up with esports tournaments, matches, teams, and players. This project is the **frontend** of the [GG-EZ platform](https://github.com/lufisz/GG-EZ), creating a smooth, interactive, and user-friendly experience for everyone who loves esports.
 
-The frontend was built with **React**, a powerful tool that helps create a fast and responsive interface. Whether you're on your phone, tablet, or computer, GG-EZ is designed to look great and work seamlessly. By connecting to the [backend API](https://github.com/Dimmanzo/GG-EZ-API), it ensures users can explore esports events and details effortlessly, while keeping the design simple and easy to navigate.
+The frontend was built with **React**, a powerful tool that helps create a fast and responsive interface. Whether you're on your phone, tablet, or computer, GG-EZ is designed to look great and work seamlessly. By connecting to the [backend API](https://github.com/lufisz/GG-EZ-API), it ensures users can explore esports events and details effortlessly, while keeping the design simple and easy to navigate.
 
 ---
 ## **Table of Contents**
@@ -308,7 +308,7 @@ npm install
 
 The **GG-EZ** project consists of two parts:
 - **Frontend (this repository)**: Deployed on Heroku as described below.
-- **Backend**: To make the project fully functional, you will also need to set up the backend. Follow the deployment instructions for the backend [here](https://github.com/Dimmanzo/GG-EZ-API?tab=readme-ov-file#deployment).
+- **Backend**: To make the project fully functional, you will also need to set up the backend. Follow the deployment instructions for the backend [here](https://github.com/lufisz/GG-EZ-API?tab=readme-ov-file#deployment).
 
 Below is a step-by-step guide for deploying the backend to Heroku using both the CLI and the Heroku website.
 
@@ -539,7 +539,7 @@ This design approach ensures consistency, accessibility, and a professional aest
 ## **Agile Development**
 
 This project followed Agile methodology with task tracking on GitHub Projects:  
-[View GitHub Project Board](https://github.com/users/Dimmanzo/projects/4).
+[View GitHub Project Board](https://github.com/users/lufisz/projects/4).
 
 - Development occurred in **sprints**, with user stories mapped to deliverables.  
 - Version control through **Git** with meaningful commit messages.
